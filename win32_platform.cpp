@@ -1,16 +1,9 @@
 #include <windows.h>
+// HACK: Change to module
+#include "renderer.cpp"
 
 //callback
 LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-struct RenderState {
-    LPVOID memory; //LPVOID same as void*
-    int width;
-    int height;
-
-    BITMAPINFO bitMapInfo;
-};
-RenderState renderState;
 
 //win main
 bool running = true;
@@ -55,13 +48,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
             DispatchMessageW(&message);
         }
         // Update
-        unsigned int* pixel = (unsigned int*)renderState.memory;
-
-        for(int i = 0; i < renderState.height; i++) {
-            for(int j = 0; j < renderState.width; j++) {
-                *pixel++ = i + j;
-            }
-        }
+        renderBackground();
+        
         // Render
         StretchDIBits(
             deviceContext,
