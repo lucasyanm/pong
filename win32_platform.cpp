@@ -83,7 +83,7 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             renderState.width = rectangle.right - rectangle.left;
             renderState.height = rectangle.bottom - rectangle.top;
 
-            bufferSize = renderState.width * renderState.height * sizeof(unsigned int);
+            bufferSize = renderState.width * renderState.height * sizeof(UINT32);
 
             if(renderState.memory)
                 VirtualFree(renderState.memory, 0, MEM_RELEASE);

@@ -11,8 +11,8 @@ struct RenderState {
 };
 RenderState renderState;
 
-void clearScreen(unsigned int color) {
-    unsigned int* pixel = (unsigned int*)renderState.memory;
+void clearScreen(UINT32 color) {
+    UINT32* pixel = (UINT32*)renderState.memory;
 
     for(int i = 0; i < renderState.height; i++) {
         for(int j = 0; j < renderState.width; j++) {
@@ -21,7 +21,7 @@ void clearScreen(unsigned int color) {
     }
 }
 
-void renderRect(int x0, int y0, int x1, int y1, unsigned int color) {
+void renderRect(int x0, int y0, int x1, int y1, UINT32 color) {
     // TODO: Validation to avoid memory overflow when resizing
     x0 = std::clamp(x0, 0, renderState.width);
     y0 = std::clamp(y0, 0, renderState.height);
@@ -30,7 +30,7 @@ void renderRect(int x0, int y0, int x1, int y1, unsigned int color) {
 
     for(int y = y0; y < y1; y++) {
 
-        unsigned int* pixel = (unsigned int*)renderState.memory + x0 + y * renderState.width;
+        UINT32* pixel = (UINT32*)renderState.memory + x0 + y * renderState.width;
 
         for(int x = x0; x < x1; x++) {
             *pixel++ = color;
