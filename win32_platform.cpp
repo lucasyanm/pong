@@ -52,6 +52,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         // Update
         clearScreen(0x00ff00);
         renderRect(300, 300, 200, 200, 0xff0000);
+        renderRect(0, 0, 100, 100, 0x0000ff);
         // renderRect(.5, .5, .2, .2, 0xff0000);
 
         // Render

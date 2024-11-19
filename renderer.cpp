@@ -47,6 +47,9 @@ INTERNAL void renderRect(int middleCoordX, int middleCoordY, int width, int heig
     width *= scale * renderState.height;
     height *= scale * renderState.height;
 
+    middleCoordX += renderState.width / 2;
+    middleCoordY += renderState.height / 2;
+
     // converting to pixel coord
     int x0 = middleCoordX - width;
     int y0 = middleCoordY - height;
