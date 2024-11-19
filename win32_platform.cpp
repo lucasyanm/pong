@@ -48,8 +48,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
             DispatchMessageW(&message);
         }
         // Update
-        renderBackground();
-        
+        clearScreen(0x00ff00);
+        renderRect(200, 50, 400, 500, 0xff0000);
+
         // Render
         StretchDIBits(
             deviceContext,
@@ -91,7 +92,7 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
             renderState.bitMapInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
             renderState.bitMapInfo.bmiHeader.biWidth = renderState.width;
-            renderState.bitMapInfo.bmiHeader.biHeight = -renderState.height;
+            renderState.bitMapInfo.bmiHeader.biHeight = renderState.height;
             renderState.bitMapInfo.bmiHeader.biPlanes = 1;
             renderState.bitMapInfo.bmiHeader.biBitCount = 32;
             renderState.bitMapInfo.bmiHeader.biCompression = BI_RGB;
