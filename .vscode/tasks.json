@@ -11,7 +11,8 @@
         "-o",
         "${fileDirname}\\${fileBasenameNoExtension}.exe",
         "-std=c++23",
-        "-municode"
+        "-municode",
+        "-lgdi32"
       ],
       "options": {
         "cwd": "C:/msys64/ucrt64/bin"
