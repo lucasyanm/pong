@@ -11,6 +11,7 @@ struct RenderState {
     BITMAPINFO bitMapInfo;
 };
 GLOBALVAR RenderState renderState;
+GLOBALVAR float scale = 0.001f;
 
 INTERNAL void clearScreen(UINT32 color) {
     UINT32* pixel = (UINT32*)renderState.memory;
@@ -22,7 +23,7 @@ INTERNAL void clearScreen(UINT32 color) {
     }
 }
 
-INTERNAL void renderRect(int x0, int y0, int x1, int y1, UINT32 color) {
+INTERNAL void renderRectInPixels(int x0, int y0, int x1, int y1, UINT32 color) {
     // TODO: Validation to avoid memory overflow when resizing
     x0 = std::clamp(x0, 0, renderState.width);
     y0 = std::clamp(y0, 0, renderState.height);
@@ -37,4 +38,20 @@ INTERNAL void renderRect(int x0, int y0, int x1, int y1, UINT32 color) {
             *pixel++ = color;
         }
     }
+}
+
+INTERNAL void renderRect(int middleCoordX, int middleCoordY, int width, int height, UINT32 color) {
+    // convert to percentage
+    middleCoordX *= scale * renderState.height;
+    middleCoordY *= scale * renderState.height;
+    width *= scale * renderState.height;
+    height *= scale * renderState.height;
+
+    // converting to pixel coord
+    int x0 = middleCoordX - width;
+    int y0 = middleCoordY - height;
+    int x1 = middleCoordX + width;
+    int y1 = middleCoordY + height;
+
+    renderRectInPixels(x0, y0, x1, y1, color);
 }

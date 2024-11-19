@@ -2,6 +2,8 @@
 // HACK: Change to module
 #include "renderer.cpp"
 
+//TODO: Set win32_platform.cpp as the always source file to build
+
 //callback
 LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -49,7 +51,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         }
         // Update
         clearScreen(0x00ff00);
-        renderRect(200, 50, 400, 500, 0xff0000);
+        renderRect(300, 300, 200, 200, 0xff0000);
+        // renderRect(.5, .5, .2, .2, 0xff0000);
 
         // Render
         StretchDIBits(
