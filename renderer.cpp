@@ -1,8 +1,11 @@
+// XXX: It cannot be generated as module due to windows.h need of wWinMain and other libraries need of windows.h
 #include <wingdi.h>
 #include <minwindef.h>
+
 #include <algorithm>
-#include "utils.cpp"
 #include <numeric>
+
+#include "../../macros.h"
 
 struct RenderState {
     LPVOID memory; //LPVOID same as void*
@@ -25,7 +28,6 @@ INTERNAL void clearScreen(UINT32 color) {
 }
 
 INTERNAL void renderRectInPixels(int x0, int y0, int x1, int y1, UINT32 color) {
-    // TODO: Validation to avoid memory overflow when resizing
     x0 = std::clamp(x0, 0, renderState.width);
     y0 = std::clamp(y0, 0, renderState.height);
     x1 = std::clamp(x1, 0, renderState.width);
