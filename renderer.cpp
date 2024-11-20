@@ -2,6 +2,7 @@
 #include <minwindef.h>
 #include <algorithm>
 #include "utils.cpp"
+#include <numeric>
 
 struct RenderState {
     LPVOID memory; //LPVOID same as void*
@@ -41,16 +42,24 @@ INTERNAL void renderRectInPixels(int x0, int y0, int x1, int y1, UINT32 color) {
 }
 
 INTERNAL void renderRect(int middleCoordX, int middleCoordY, int width, int height, UINT32 color) {
+    // calculate aspect ratio
+    int greaterCommonDivisor = std::gcd(renderState.width, renderState.height);
+    int aspectWidth = renderState.width / greaterCommonDivisor;
+    int aspectHeight = renderState.height / greaterCommonDivisor;
+
+    // define multiplier
+    int multiplier = aspectHeight > aspectWidth ? renderState.width : renderState.height;
+    
     // convert to percentage
-    middleCoordX *= scale * renderState.height;
-    middleCoordY *= scale * renderState.height;
-    width *= scale * renderState.height;
-    height *= scale * renderState.height;
+    middleCoordX *= scale * multiplier;
+    middleCoordY *= scale * multiplier;
+    width *= scale * multiplier;
+    height *= scale * multiplier;
 
     middleCoordX += renderState.width / 2;
     middleCoordY += renderState.height / 2;
 
-    // converting to pixel coord
+    // convert to pixel coord
     int x0 = middleCoordX - width;
     int y0 = middleCoordY - height;
     int x1 = middleCoordX + width;
