@@ -47,18 +47,18 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
             DispatchMessageW(&message);
         }
         // Update
-        clearScreen(0x00ff00);
-        renderRect(300, 300, 200, 200, 0xff0000);
-        renderRect(0, 0, 100, 100, 0x0000ff);
+        Renderer::clearScreen(0x00ff00);
+        Renderer::renderRect(300, 300, 200, 200, 0xff0000);
+        Renderer::renderRect(0, 0, 100, 100, 0x0000ff);
         // renderRect(.5, .5, .2, .2, 0xff0000);
 
         // Render
         StretchDIBits(
             deviceContext,
-            0, 0, renderState.width, renderState.height,
-            0, 0, renderState.width, renderState.height,
-            renderState.memory,
-            &renderState.bitMapInfo,
+            0, 0, Renderer::renderState.width, Renderer::renderState.height,
+            0, 0, Renderer::renderState.width, Renderer::renderState.height,
+            Renderer::renderState.memory,
+            &Renderer::renderState.bitMapInfo,
             DIB_RGB_COLORS,
             SRCCOPY);
     }
@@ -81,22 +81,29 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
             GetClientRect(hwnd, &rectangle);
 
-            renderState.width = rectangle.right - rectangle.left;
-            renderState.height = rectangle.bottom - rectangle.top;
+            Renderer::renderState.width = rectangle.right - rectangle.left;
+            Renderer::renderState.height = rectangle.bottom - rectangle.top;
 
-            bufferSize = renderState.width * renderState.height * sizeof(UINT32);
+            bufferSize = Renderer::renderState.width 
+                * Renderer::renderState.height 
+                * sizeof(UINT32);
 
-            if(renderState.memory)
-                VirtualFree(renderState.memory, 0, MEM_RELEASE);
+            if(Renderer::renderState.memory)
+                VirtualFree(Renderer::renderState.memory, 0, MEM_RELEASE);
 
-            renderState.memory = VirtualAlloc(NULL, bufferSize, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+            Renderer::renderState.memory = VirtualAlloc(
+                NULL, 
+                bufferSize, 
+                MEM_COMMIT | MEM_RESERVE, 
+                PAGE_READWRITE
+            );
 
-            renderState.bitMapInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-            renderState.bitMapInfo.bmiHeader.biWidth = renderState.width;
-            renderState.bitMapInfo.bmiHeader.biHeight = renderState.height;
-            renderState.bitMapInfo.bmiHeader.biPlanes = 1;
-            renderState.bitMapInfo.bmiHeader.biBitCount = 32;
-            renderState.bitMapInfo.bmiHeader.biCompression = BI_RGB;
+            Renderer::renderState.bitMapInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+            Renderer::renderState.bitMapInfo.bmiHeader.biWidth = Renderer::renderState.width;
+            Renderer::renderState.bitMapInfo.bmiHeader.biHeight = Renderer::renderState.height;
+            Renderer::renderState.bitMapInfo.bmiHeader.biPlanes = 1;
+            Renderer::renderState.bitMapInfo.bmiHeader.biBitCount = 32;
+            Renderer::renderState.bitMapInfo.bmiHeader.biCompression = BI_RGB;
 
             break;
         default:
