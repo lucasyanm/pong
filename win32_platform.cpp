@@ -1,5 +1,9 @@
 #include <windows.h>
-#include "renderer.cpp"
+#include "include/renderer.h"
+#include "include/macros.h"
+
+//TODO: ReadMe file
+//TODO: Cite make as needed to build on a readme file
 
 //callback
 LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -7,8 +11,12 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 //win main
 GLOBALVAR bool running = true;
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
-{
+int WINAPI wWinMain(
+    HINSTANCE hInstance, 
+    HINSTANCE hPrevInstance, 
+    PWSTR pCmdLine, 
+    int nCmdShow
+) {
     const wchar_t CLASS_NAME[] = L"Game Window Class";
 
     WNDCLASSW WindowClass = {};
