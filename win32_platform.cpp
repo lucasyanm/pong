@@ -61,14 +61,7 @@ int WINAPI wWinMain(
         // renderRect(.5, .5, .2, .2, 0xff0000);
 
         // Render
-        StretchDIBits(
-            deviceContext,
-            0, 0, Renderer::renderState.width, Renderer::renderState.height,
-            0, 0, Renderer::renderState.width, Renderer::renderState.height,
-            Renderer::renderState.memory,
-            &Renderer::renderState.bitMapInfo,
-            DIB_RGB_COLORS,
-            SRCCOPY);
+        Renderer::render(deviceContext);
     }
 
     return 0;
@@ -88,34 +81,27 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             RECT rectangle;
 
             GetClientRect(hwnd, &rectangle);
+            
+            Renderer::setSize(
+                rectangle.right - rectangle.left,
+                rectangle.bottom - rectangle.top);
 
-            Renderer::renderState.width = rectangle.right - rectangle.left;
-            Renderer::renderState.height = rectangle.bottom - rectangle.top;
+            Renderer::allocMemroy();
 
-            bufferSize = Renderer::renderState.width 
-                * Renderer::renderState.height 
-                * sizeof(UINT32);
-
-            if(Renderer::renderState.memory)
-                VirtualFree(Renderer::renderState.memory, 0, MEM_RELEASE);
-
-            Renderer::renderState.memory = VirtualAlloc(
-                NULL, 
-                bufferSize, 
-                MEM_COMMIT | MEM_RESERVE, 
-                PAGE_READWRITE
+            Renderer::setBitMapInfo(
+                sizeof(BITMAPINFOHEADER),
+                1,
+                32,
+                BI_RGB
             );
-
-            Renderer::renderState.bitMapInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-            Renderer::renderState.bitMapInfo.bmiHeader.biWidth = Renderer::renderState.width;
-            Renderer::renderState.bitMapInfo.bmiHeader.biHeight = Renderer::renderState.height;
-            Renderer::renderState.bitMapInfo.bmiHeader.biPlanes = 1;
-            Renderer::renderState.bitMapInfo.bmiHeader.biBitCount = 32;
-            Renderer::renderState.bitMapInfo.bmiHeader.biCompression = BI_RGB;
 
             break;
         default:
-            result = DefWindowProc(hwnd, uMsg, wParam, lParam);
+            result = DefWindowProc(
+                hwnd,
+                uMsg, 
+                wParam, 
+                lParam);
     }
 
     return result;

@@ -5,6 +5,8 @@
 #include <minwindef.h>
 #include <wingdi.h>
 
+#include <tuple>
+
 struct RenderState {
     LPVOID memory; //LPVOID same as void*
     int width;
@@ -15,8 +17,16 @@ struct RenderState {
 
 class Renderer {
 public:
-    static RenderState renderState;
+    //Memory
+    static void allocMemroy();
+    static void deallocMemory();
+    static bool isMemoryAllocated();
+    static LPVOID getMemoryAddress();
 
+    //Screen
+    static std::tuple<int, int> setSize(int width, int height);
+    static int getWidth();
+    static int getHeight();
     static void clearScreen(UINT32 color);
 
     static void renderRect(
@@ -27,7 +37,20 @@ public:
         UINT32 color
     );
 
+    static void render(HDC deviceContext);
+
+    //BitMap
+    static void setBitMapInfo(BITMAPINFO bitMapInfo);
+    static void setBitMapInfo(
+        DWORD size,
+        WORD planes,
+        WORD bitCount,
+        DWORD compression
+    );
+    static BITMAPINFO getBitMapInfo();
+
 private:
+    static RenderState renderState;
     static constexpr float scale = 0.001f;
 
     static void renderRectInPixels(
