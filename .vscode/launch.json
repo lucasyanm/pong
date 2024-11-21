@@ -28,7 +28,8 @@
           "ignoreFailures": true
         }
       ],
-      "preLaunchTask": "build"
+      "preLaunchTask": "build",
+      "postDebugTask": "clean"
     }
   ]
 }
