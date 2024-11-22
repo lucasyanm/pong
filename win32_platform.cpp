@@ -2,6 +2,7 @@
 #include "include/renderer.h"
 #include "include/macros.h"
 #include "include/input.h"
+#include "include/game.h"
 
 //TODO: ReadMe file
 //TODO: Cite make as needed to build on a readme file
@@ -57,18 +58,8 @@ int WINAPI wWinMain(
             TranslateMessage(&message);
             DispatchMessageW(&message);
         }
-        // Update
-        clearScreen(renderState, 0x00ff00);
 
-        if(input.buttons[Button::UP].pressed) {
-            renderRect(renderState, 300, 300, 200, 200, 0xff0000);
-        }
-        if(input.buttons[Button::DOWN].pressed) {
-            renderRect(renderState, 500, 500, 200, 200, 0xff0000);
-        }
-        if(input.buttons[Button::LEFT].pressed) {
-            clearScreen(renderState, 0xff0000);
-        }
+        simulateGame(input, renderState);
 
         // Render
         render(renderState, deviceContext);
@@ -119,22 +110,10 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             bool pressed = HIWORD(lParam) & KF_UP ? false : true;
 
             switch (vkCode) {
-                case VK_UP:
-                    input.buttons[Button::UP].pressed = pressed;
-                    input.buttons[Button::UP].changed = true;
-                    break;
-                case VK_DOWN:
-                    input.buttons[Button::DOWN].pressed = pressed;
-                    input.buttons[Button::DOWN].changed = true;
-                    break;
-                case VK_LEFT:
-                    input.buttons[Button::LEFT].pressed = pressed;
-                    input.buttons[Button::LEFT].changed = true;
-                    break;
-                case VK_RIGHT:
-                    input.buttons[Button::RIGHT].pressed = pressed;
-                    input.buttons[Button::RIGHT].changed = true;
-                    break;
+                processButton(Button::UP, VK_UP, pressed);
+                processButton(Button::DOWN, VK_DOWN, pressed);
+                processButton(Button::LEFT, VK_LEFT, pressed);
+                processButton(Button::RIGHT, VK_RIGHT, pressed);
             }
         }
             break;
