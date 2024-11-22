@@ -10,6 +10,7 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 //win main
 GLOBALVAR bool running = true;
+GLOBALVAR RenderState renderState;
 
 int WINAPI wWinMain(
     HINSTANCE hInstance, 
@@ -55,13 +56,13 @@ int WINAPI wWinMain(
             DispatchMessageW(&message);
         }
         // Update
-        clearScreen(0x00ff00);
-        renderRect(300, 300, 200, 200, 0xff0000);
-        renderRect(0, 0, 100, 100, 0x0000ff);
+        clearScreen(renderState, 0x00ff00);
+        renderRect(renderState, 300, 300, 200, 200, 0xff0000);
+        renderRect(renderState, 0, 0, 100, 100, 0x0000ff);
         // renderRect(.5, .5, .2, .2, 0xff0000);
 
         // Render
-        render(deviceContext);
+        render(renderState, deviceContext);
     }
 
     return 0;
@@ -81,20 +82,19 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             RECT rectangle;
 
             GetClientRect(hwnd, &rectangle);
-            
-            setSize(
-                rectangle.right - rectangle.left,
-                rectangle.bottom - rectangle.top);
 
-            allocMemory();
+            renderState.width = rectangle.right - rectangle.left;
+            renderState.height = rectangle.bottom - rectangle.top;
+
+            allocMemory(renderState);
 
             setBitMapInfo(
+                renderState,
                 sizeof(BITMAPINFOHEADER),
                 1,
                 32,
                 BI_RGB
             );
-
             break;
         default:
             result = DefWindowProc(

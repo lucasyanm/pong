@@ -18,17 +18,15 @@ struct RenderState {
 
     BITMAPINFO bitMapInfo;
 };
-GLOBALVAR RenderState renderState;
 
 #pragma region Memory
-void allocMemory();
-void deallocMemory();
-bool isMemoryAllocated();
+void allocMemory(RenderState& renderState);
+void deallocMemory(RenderState& renderState);
 #pragma endregion
 
 #pragma region BitMap
-void setBitMapInfo(BITMAPINFO bitMapInfo);
 void setBitMapInfo(
+    RenderState& renderState,
     DWORD size,
     WORD planes,
     WORD bitCount,
@@ -37,10 +35,10 @@ void setBitMapInfo(
 #pragma endregion
 
 #pragma region Screen
-std::tuple<int, int> setSize(int width, int height);
-void clearScreen(UINT32 color);
+void clearScreen(RenderState& renderState, UINT32 color);
 
 void renderRect(
+    RenderState& renderState,
     int middleCoordX, 
     int middleCoordY, 
     int width, 
@@ -48,6 +46,7 @@ void renderRect(
     UINT32 color
 );
 void renderRectInPixels(
+    RenderState& renderState,
     int x0, 
     int y0, 
     int x1, 
@@ -55,6 +54,6 @@ void renderRectInPixels(
     UINT32 color
 );
 
-void render(HDC deviceContext);
+void render(const RenderState& renderState, HDC deviceContext);
 #pragma endregion
 #endif

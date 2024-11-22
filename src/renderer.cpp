@@ -4,31 +4,28 @@
 #include <numeric>
 #include <memoryapi.h>
 
-//PUBLIC
-
 #pragma region Memory
-void allocMemory() {
-    deallocMemory();
+void allocMemory(RenderState& renderState) {
+    deallocMemory(renderState);
 
     int bufferSize = renderState.width * renderState.height * sizeof(UINT32);
 
     renderState.memory = VirtualAlloc(
         NULL, 
         bufferSize, 
-        MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE
+        MEM_COMMIT | MEM_RESERVE, 
+        PAGE_READWRITE
     );
 }
 
-void deallocMemory() { 
-    if(isMemoryAllocated())
+void deallocMemory(RenderState& renderState) { 
+    if(renderState.memory != NULL)
         VirtualFree(renderState.memory, 0, MEM_RELEASE);
 };
-
-bool isMemoryAllocated() { return renderState.memory != NULL; };
 #pragma endregion
 
 #pragma region Screen
-void clearScreen(UINT32 color) {
+void clearScreen(RenderState& renderState, UINT32 color) {
     UINT32* pixel = (UINT32*)renderState.memory;
 
     for(int i = 0; i < renderState.height; i++) {
@@ -39,6 +36,7 @@ void clearScreen(UINT32 color) {
 }
 
 void renderRect(
+    RenderState& renderState,
     int middleCoordX, 
     int middleCoordY, 
     int width, 
@@ -68,28 +66,11 @@ void renderRect(
     int x1 = middleCoordX + width;
     int y1 = middleCoordY + height;
 
-    renderRectInPixels(x0, y0, x1, y1, color);
+    renderRectInPixels(renderState, x0, y0, x1, y1, color);
 }
 
-std::tuple<int, int> setSize(int width, int height) {
-    renderState.width = width;
-    renderState.height = height;
-
-    return std::make_tuple(width, height);
-}
-
-void render(HDC deviceContext) {
-    StretchDIBits(
-        deviceContext, 
-        0, 0, renderState.width, renderState.height, 
-        0, 0, renderState.width, renderState.height, 
-        renderState.memory, 
-        &renderState.bitMapInfo, 
-        DIB_RGB_COLORS, 
-        SRCCOPY
-    );
-}
 void renderRectInPixels(
+    RenderState& renderState,
     int x0, 
     int y0, 
     int x1, 
@@ -110,12 +91,23 @@ void renderRectInPixels(
         }
     }
 }
+
+void render(const RenderState& renderState, HDC deviceContext) {
+    StretchDIBits(
+        deviceContext, 
+        0, 0, renderState.width, renderState.height, 
+        0, 0, renderState.width, renderState.height, 
+        renderState.memory, 
+        &renderState.bitMapInfo, 
+        DIB_RGB_COLORS, 
+        SRCCOPY
+    );
+}
 #pragma endregion
 
 #pragma region BitMap
-void setBitMapInfo(BITMAPINFO bitMapInfo) { renderState.bitMapInfo = bitMapInfo; }
-
 void setBitMapInfo(
+    RenderState& renderState,
     DWORD size,
     WORD planes,
     WORD bitCount,
