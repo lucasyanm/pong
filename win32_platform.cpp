@@ -55,13 +55,13 @@ int WINAPI wWinMain(
             DispatchMessageW(&message);
         }
         // Update
-        Renderer::clearScreen(0x00ff00);
-        Renderer::renderRect(300, 300, 200, 200, 0xff0000);
-        Renderer::renderRect(0, 0, 100, 100, 0x0000ff);
+        clearScreen(0x00ff00);
+        renderRect(300, 300, 200, 200, 0xff0000);
+        renderRect(0, 0, 100, 100, 0x0000ff);
         // renderRect(.5, .5, .2, .2, 0xff0000);
 
         // Render
-        Renderer::render(deviceContext);
+        render(deviceContext);
     }
 
     return 0;
@@ -82,13 +82,13 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
             GetClientRect(hwnd, &rectangle);
             
-            Renderer::setSize(
+            setSize(
                 rectangle.right - rectangle.left,
                 rectangle.bottom - rectangle.top);
 
-            Renderer::allocMemroy();
+            allocMemory();
 
-            Renderer::setBitMapInfo(
+            setBitMapInfo(
                 sizeof(BITMAPINFOHEADER),
                 1,
                 32,

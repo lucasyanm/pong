@@ -7,6 +7,10 @@
 
 #include <tuple>
 
+#include "../include/macros.h"
+
+GLOBALVAR constexpr float scale = 0.001f;
+
 struct RenderState {
     LPVOID memory; //LPVOID same as void*
     int width;
@@ -14,52 +18,46 @@ struct RenderState {
 
     BITMAPINFO bitMapInfo;
 };
+GLOBALVAR RenderState renderState;
 
-class Renderer {
-public:
-    //Memory
-    static void allocMemroy();
-    static void deallocMemory();
-    static bool isMemoryAllocated();
-    static LPVOID getMemoryAddress();
+#pragma region Memory
+void allocMemory();
+void deallocMemory();
+bool isMemoryAllocated();
+#pragma endregion
 
-    //Screen
-    static std::tuple<int, int> setSize(int width, int height);
-    static int getWidth();
-    static int getHeight();
-    static void clearScreen(UINT32 color);
+#pragma region BitMap
+void setBitMapInfo(BITMAPINFO bitMapInfo);
+void setBitMapInfo(
+    DWORD size,
+    WORD planes,
+    WORD bitCount,
+    DWORD compression
+);
+BITMAPINFO getBitMapInfo();
+#pragma endregion
 
-    static void renderRect(
-        int middleCoordX, 
-        int middleCoordY, 
-        int width, 
-        int height, 
-        UINT32 color
-    );
+#pragma region Screen
+std::tuple<int, int> setSize(int width, int height);
+int getWidth();
+int getHeight();
+void clearScreen(UINT32 color);
 
-    static void render(HDC deviceContext);
+void renderRect(
+    int middleCoordX, 
+    int middleCoordY, 
+    int width, 
+    int height, 
+    UINT32 color
+);
+void renderRectInPixels(
+    int x0, 
+    int y0, 
+    int x1, 
+    int y1, 
+    UINT32 color
+);
 
-    //BitMap
-    static void setBitMapInfo(BITMAPINFO bitMapInfo);
-    static void setBitMapInfo(
-        DWORD size,
-        WORD planes,
-        WORD bitCount,
-        DWORD compression
-    );
-    static BITMAPINFO getBitMapInfo();
-
-private:
-    static RenderState renderState;
-    static constexpr float scale = 0.001f;
-
-    static void renderRectInPixels(
-        int x0, 
-        int y0, 
-        int x1, 
-        int y1, 
-        UINT32 color
-    );
-};
-
+void render(HDC deviceContext);
+#pragma endregion
 #endif

@@ -6,9 +6,9 @@
 
 //PUBLIC
 
-//Memory
-void Renderer::allocMemroy() {
-    Renderer::deallocMemory();
+#pragma region Memory
+void allocMemory() {
+    deallocMemory();
 
     int bufferSize = renderState.width * renderState.height * sizeof(UINT32);
 
@@ -19,17 +19,16 @@ void Renderer::allocMemroy() {
     );
 }
 
-void Renderer::deallocMemory() { 
-    if(Renderer::isMemoryAllocated())
+void deallocMemory() { 
+    if(isMemoryAllocated())
         VirtualFree(renderState.memory, 0, MEM_RELEASE);
 };
 
-LPVOID Renderer::getMemoryAddress() { return renderState.memory; };
+bool isMemoryAllocated() { return renderState.memory != NULL; };
+#pragma endregion
 
-bool Renderer::isMemoryAllocated() { return renderState.memory != NULL; };
-
-//Screen
-void Renderer::clearScreen(UINT32 color) {
+#pragma region Screen
+void clearScreen(UINT32 color) {
     UINT32* pixel = (UINT32*)renderState.memory;
 
     for(int i = 0; i < renderState.height; i++) {
@@ -39,7 +38,7 @@ void Renderer::clearScreen(UINT32 color) {
     }
 }
 
-void Renderer::renderRect(
+void renderRect(
     int middleCoordX, 
     int middleCoordY, 
     int width, 
@@ -72,18 +71,18 @@ void Renderer::renderRect(
     renderRectInPixels(x0, y0, x1, y1, color);
 }
 
-std::tuple<int, int> Renderer::setSize(int width, int height) {
+std::tuple<int, int> setSize(int width, int height) {
     renderState.width = width;
     renderState.height = height;
 
     return std::make_tuple(width, height);
 }
 
-int Renderer::getWidth() { return renderState.width; }
+int getWidth() { return renderState.width; }
 
-int Renderer::getHeight() { return renderState.height; }
+int getHeight() { return renderState.height; }
 
-void Renderer::render(HDC deviceContext) {
+void render(HDC deviceContext) {
     StretchDIBits(
         deviceContext, 
         0, 0, renderState.width, renderState.height, 
@@ -94,30 +93,7 @@ void Renderer::render(HDC deviceContext) {
         SRCCOPY
     );
 }
-
-//BitMap
-void Renderer::setBitMapInfo(BITMAPINFO bitMapInfo) { renderState.bitMapInfo = bitMapInfo; }
-
-void Renderer::setBitMapInfo(
-    DWORD size,
-    WORD planes,
-    WORD bitCount,
-    DWORD compression
-) {
-    renderState.bitMapInfo.bmiHeader.biSize = size;
-    renderState.bitMapInfo.bmiHeader.biWidth = renderState.width;
-    renderState.bitMapInfo.bmiHeader.biHeight = renderState.height;
-    renderState.bitMapInfo.bmiHeader.biPlanes = planes;
-    renderState.bitMapInfo.bmiHeader.biBitCount = bitCount;
-    renderState.bitMapInfo.bmiHeader.biCompression = compression;
-};
-
-BITMAPINFO Renderer::getBitMapInfo() { return renderState.bitMapInfo; }
-
-//PRIVATE
-RenderState Renderer::renderState;
-
-void Renderer::renderRectInPixels(
+void renderRectInPixels(
     int x0, 
     int y0, 
     int x1, 
@@ -138,4 +114,24 @@ void Renderer::renderRectInPixels(
         }
     }
 }
+#pragma endregion
 
+#pragma region BitMap
+void setBitMapInfo(BITMAPINFO bitMapInfo) { renderState.bitMapInfo = bitMapInfo; }
+
+void setBitMapInfo(
+    DWORD size,
+    WORD planes,
+    WORD bitCount,
+    DWORD compression
+) {
+    renderState.bitMapInfo.bmiHeader.biSize = size;
+    renderState.bitMapInfo.bmiHeader.biWidth = renderState.width;
+    renderState.bitMapInfo.bmiHeader.biHeight = renderState.height;
+    renderState.bitMapInfo.bmiHeader.biPlanes = planes;
+    renderState.bitMapInfo.bmiHeader.biBitCount = bitCount;
+    renderState.bitMapInfo.bmiHeader.biCompression = compression;
+};
+
+BITMAPINFO getBitMapInfo() { return renderState.bitMapInfo; }
+#pragma endregion
