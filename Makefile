@@ -15,9 +15,11 @@ TARGET = win32_platform
 all: $(TARGET)
 
 # Rule to build object files from source files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CREATE_DIR) $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	$(CREATE_DIR) $(OBJ_DIR)
 
 # Rule to compile the main file
 main.o: $(TARGET).cpp
@@ -29,5 +31,5 @@ $(TARGET): $(OBJECTS) main.o
 
 # Clean build artifacts
 clean:
-	rmdir /q /s obj
-	del /q /s obj main.o win32_platform.exe
+	rmdir /q /s $(OBJ_DIR)
+	del /q /s obj *.o $(TARGET).exe
