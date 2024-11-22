@@ -34,7 +34,6 @@ void setBitMapInfo(
     WORD bitCount,
     DWORD compression
 );
-BITMAPINFO getBitMapInfo();
 #pragma endregion
 
 #pragma region Screen

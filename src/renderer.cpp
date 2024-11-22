@@ -132,6 +132,4 @@ void setBitMapInfo(
     renderState.bitMapInfo.bmiHeader.biBitCount = bitCount;
     renderState.bitMapInfo.bmiHeader.biCompression = compression;
 };
-
-BITMAPINFO getBitMapInfo() { return renderState.bitMapInfo; }
 #pragma endregion
