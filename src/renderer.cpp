@@ -78,10 +78,6 @@ std::tuple<int, int> setSize(int width, int height) {
     return std::make_tuple(width, height);
 }
 
-int getWidth() { return renderState.width; }
-
-int getHeight() { return renderState.height; }
-
 void render(HDC deviceContext) {
     StretchDIBits(
         deviceContext, 

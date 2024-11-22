@@ -38,8 +38,6 @@ void setBitMapInfo(
 
 #pragma region Screen
 std::tuple<int, int> setSize(int width, int height);
-int getWidth();
-int getHeight();
 void clearScreen(UINT32 color);
 
 void renderRect(
