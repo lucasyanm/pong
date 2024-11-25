@@ -1,4 +1,4 @@
-// HACK: Avoid global variables
+// INFO: Avoid global variables
 #define GLOBALVAR static
 
 #define isPressed(b) (input.buttons[b].pressed && input.buttons[b].changed)

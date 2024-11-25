@@ -4,9 +4,6 @@
 #include "include/input.h"
 #include "include/game.h"
 
-//TODO: ReadMe file
-//TODO: Cite make as needed to build on a readme file
-
 //callback
 LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
