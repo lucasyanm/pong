@@ -4,13 +4,12 @@ LDFLAGS = -Llib
 CREATE_DIR = mkdir
 
 SRC_DIR = src
-INC_DIR = include
 OBJ_DIR = obj
 
+MAIN = $(wildcard *.cpp)
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
-HEADERS = $(wildcard $(INC_DIR)/*.h)
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
-TARGET = win32_platform
+TARGET = win32_platform.exe
 
 all: $(TARGET)
 
@@ -22,14 +21,14 @@ $(OBJ_DIR):
 	$(CREATE_DIR) $(OBJ_DIR)
 
 # Rule to compile the main file
-main.o: $(TARGET).cpp
-	$(CXX) $(CXXFLAGS) -c win32_platform.cpp -o main.o
+$(OBJ_DIR)/main.o: $(MAIN)
+	$(CXX) $(CXXFLAGS) -c $^ -o $@
 
 # Rule to link everything into the final executable
-$(TARGET): $(OBJECTS) main.o
-	$(CXX) -std=c++23 -municode $(OBJECTS) main.o -o $(TARGET) -lgdi32
+$(TARGET): $(OBJECTS) $(OBJ_DIR)/main.o
+	$(CXX) $(CXXFLAGS) $^ -o $(TARGET) -lgdi32
 
 # Clean build artifacts
 clean:
 	rmdir /q /s $(OBJ_DIR)
-	del /q /s obj *.o $(TARGET).exe
+	del /q /s obj *.o $(TARGET)
