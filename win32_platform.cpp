@@ -44,6 +44,17 @@ int WINAPI wWinMain(
 
     HDC deviceContext = GetDC(window);
 
+    float deltaTimeInSeconds = 0.016666f; //60FPS in SPF
+    LARGE_INTEGER frameBeginTime;
+    QueryPerformanceCounter(&frameBeginTime);
+
+    float performanceFrequency;
+    {
+        LARGE_INTEGER frequency;
+        QueryPerformanceFrequency(&frequency);
+        performanceFrequency = (float)frequency.QuadPart;
+    }
+
     while(running)
     {
         // Input
@@ -59,10 +70,17 @@ int WINAPI wWinMain(
             DispatchMessageW(&message);
         }
 
-        simulateGame(input, renderState);
+        simulateGame(input, deltaTimeInSeconds, renderState);
 
         // Render
         render(renderState, deviceContext);
+
+        // Calculate delta time in seconds
+        LARGE_INTEGER frameEndTime;
+        QueryPerformanceCounter(&frameEndTime);
+
+        deltaTimeInSeconds = (float)(frameEndTime.QuadPart - frameBeginTime.QuadPart) / performanceFrequency;
+        frameBeginTime = frameEndTime;
     }
 
     return 0;

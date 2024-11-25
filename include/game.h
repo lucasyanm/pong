@@ -4,6 +4,9 @@
 #include "input.h"
 #include "renderer.h"
 
-void simulateGame(const Input& input, RenderState& renderState);
+void simulateGame(
+    const Input& input, 
+    const float& deltaTimeInSeconds, 
+    RenderState& renderState);
 
 #endif
