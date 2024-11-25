@@ -1,50 +1,34 @@
 #include "../include/game.h"
 
 float playerPosY = 0.f;
-float playerPosX = 0.f;
-UINT color = 0xff0000;
+const UINT mainColor = 0xebebeb;
+const UINT secColor = 0x1c1c1c;
 
-GLOBALVAR const float playerSpeed = 300.f; //units (pixels) per second
+GLOBALVAR const float playerSpeed = 100.f; //units (pixels) per second
 
-// BUG: Not getting when button is released
+// BUG: Delay to start player movement
 void simulateGame(
     const Input& input, 
     const float& deltaTimeInSeconds,
     RenderState& renderState
 ) {
-    clearScreen(renderState, 0x00ff00);
+    //background
+    clearScreen(renderState, mainColor);
+    renderRect(renderState, 0, 0, 85, 45, secColor);
 
-    if (isHold(Button::DOWN)) {
+    if (isHold(Button::DOWN))
+    {
         playerPosY -= playerSpeed*deltaTimeInSeconds;
-        color = 0xff0000;
     };
-    if(isReleased(Button::DOWN)) {
-        color = 0x0000ff;
-    }
-
     if (isHold(Button::UP)) {
         playerPosY += playerSpeed*deltaTimeInSeconds;
-        color = 0xff0000;
     };
-    if(isReleased(Button::UP)) {
-        color = 0x0000ff;
-    }
 
-    if(isHold(Button::LEFT)) {
-        playerPosX -= playerSpeed*deltaTimeInSeconds;
-        color = 0xff0000;
-    };
-    if(isReleased(Button::LEFT)) {
-        color = 0x0000ff;
-    }    
+    //ball
+    renderRect(renderState, 0, 0, 1, 1, mainColor);
 
-    if(isHold(Button::RIGHT)) {
-        playerPosX += playerSpeed*deltaTimeInSeconds;
-        color = 0xff0000;
-    };
-    if(isReleased(Button::RIGHT)) {
-        color = 0x0000ff;
-    }
-
-    renderRect(renderState, playerPosX, playerPosY, 10, 10, color);
+    //player Right
+    renderRect(renderState, 80, 0, 2.5, 12, mainColor);
+    //player Left
+    renderRect(renderState, -80, playerPosY, 2.5, 12, mainColor);
 }

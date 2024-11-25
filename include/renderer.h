@@ -9,7 +9,7 @@
 
 #include "../include/macros.h"
 
-GLOBALVAR constexpr float scale = 0.001f;
+GLOBALVAR const float scale = 0.01f;
 
 struct RenderState {
     LPVOID memory; //LPVOID same as void*
