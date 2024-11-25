@@ -1,6 +1,7 @@
 #include "../include/game.h"
 
-float playerPosY = 0.f;
+float playerPos, playerDerivativePos;
+
 const UINT mainColor = 0xebebeb;
 const UINT secColor = 0x1c1c1c;
 
@@ -16,13 +17,20 @@ void simulateGame(
     clearScreen(renderState, mainColor);
     renderRect(renderState, 0, 0, 85, 45, secColor);
 
+    //movement
+    float playerDerivativeDerivativePos = 0.f;
     if (isHold(Button::DOWN))
     {
-        playerPosY -= playerSpeed*deltaTimeInSeconds;
+        playerDerivativeDerivativePos -= 2000;
     };
     if (isHold(Button::UP)) {
-        playerPosY += playerSpeed*deltaTimeInSeconds;
+        playerDerivativeDerivativePos += 2000;
     };
+
+    playerDerivativeDerivativePos -= playerDerivativePos * 10.f;
+
+    playerPos = playerPos + playerDerivativePos * deltaTimeInSeconds + playerDerivativeDerivativePos * deltaTimeInSeconds * deltaTimeInSeconds * .5f;
+    playerDerivativePos = playerDerivativePos + playerDerivativeDerivativePos * deltaTimeInSeconds;
 
     //ball
     renderRect(renderState, 0, 0, 1, 1, mainColor);
@@ -30,5 +38,5 @@ void simulateGame(
     //player Right
     renderRect(renderState, 80, 0, 2.5, 12, mainColor);
     //player Left
-    renderRect(renderState, -80, playerPosY, 2.5, 12, mainColor);
+    renderRect(renderState, -80, playerPos, 2.5, 12, mainColor);
 }
