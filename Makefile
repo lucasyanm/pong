@@ -1,7 +1,11 @@
 CXX = g++
-CXX_FLAGS = -std=c++23 -municode -Iinclude
+CXX_FLAGS = -municode -Iinclude
 EXE_FLAGS = -lgdi32
 CREATE_DIR = mkdir
+
+ifeq ($(DEBUG_MODE), 1)
+	CXX_FLAGS += -g
+endif
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -9,7 +13,7 @@ OBJ_DIR = obj
 MAIN = $(wildcard *.cpp)
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
-TARGET = win32_platform.exe
+TARGET = main.exe
 
 all: $(TARGET)
 

@@ -8,7 +8,7 @@
       "name": "Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/win32_platform.exe",
+      "program": "${workspaceFolder}/main.exe",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${fileDirname}",
@@ -28,7 +28,11 @@
           "ignoreFailures": true
         }
       ],
-      "preLaunchTask": "build"
+      "logging": {
+        "engineLogging": false,
+        "traceResponse": false
+      },
+      "preLaunchTask": "debug"
     }
   ]
 }
