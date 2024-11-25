@@ -59,7 +59,8 @@
   ],
   "todo-tree.highlights.customHighlight": {
     "BUG": {
-      "icon": "bug"
+      "icon": "bug",
+      "background": "#f54e4e"
     },
     "HACK": {
       "icon": "tools"
