@@ -51,57 +51,6 @@ void calculateBallVelocityBasedOnPlayer(
         + player.derivativePositionY * .75f;
 }
 
-void calculateBallPosition(
-    Ball& ball, 
-    const float& deltaTimeInSeconds
-) {
-    ball.positionY += ball.derivativePositionY * deltaTimeInSeconds;
-    ball.positionX += ball.derivativePositionX * deltaTimeInSeconds;
-
-    #pragma region Player Collision
-
-    //checking player right collision
-    if (checkBallCollisionWithPlayer(playerRight)) {
-        ball.positionX = playerRight.positionX - playerRight.halfWidth - ball.halfWidth;
-        calculateBallVelocityBasedOnPlayer(playerRight);
-    } 
-    //checking player left collision
-    else if (checkBallCollisionWithPlayer(playerLeft)) {
-        ball.positionX = playerLeft.positionX + playerLeft.halfWidth + ball.halfWidth;
-        calculateBallVelocityBasedOnPlayer(playerLeft);
-    }
-
-    #pragma endregion
-
-    #pragma region Arena Collision
-
-    //checking arena axis Y collision
-    if (ball.positionY + ball.halfHeight > arenaHalfSizeHeight) {
-        ball.positionY = arenaHalfSizeHeight - ball.halfHeight;
-        ball.derivativePositionY *= -1.f;
-    }
-    else if (ball.positionY - ball.halfHeight < -arenaHalfSizeHeight) {
-        ball.positionY = -arenaHalfSizeHeight + ball.halfHeight;
-        ball.derivativePositionY *= -1.f;
-    }
-
-    //checking arena axis X collision
-    if(ball.positionX + ball.halfWidth > arenaHalfSizeWidth) {
-        ball.positionX = 0.f;
-        ball.positionY = 0.f;
-        ball.derivativePositionX *= -1.f;
-        ball.derivativePositionY = 0.f;
-    }
-    else if (ball.positionX - ball.halfWidth < -arenaHalfSizeWidth) {
-        ball.positionX = 0.f;
-        ball.positionY = 0.f;
-        ball.derivativePositionX *= -1.f;
-        ball.derivativePositionY = 0.f;
-    }
-
-    #pragma endregion
-}
-
 // BUG: Delay to start player movement in 50% keyboard
 void simulateGame(
     const Input& input, 
@@ -116,6 +65,7 @@ void simulateGame(
         arenaHalfSizeWidth, 
         arenaHalfSizeHeight, 
         secColor);
+
     //movement
     playerRight.derivativeDerivativePositionY = 0.f;
     if (isHold(Button::DOWN))
@@ -138,8 +88,55 @@ void simulateGame(
     calculatePlayerPosition(playerRight, deltaTimeInSeconds);
     calculatePlayerPosition(playerLeft, deltaTimeInSeconds);
 
-    //ball
-    calculateBallPosition(ball, deltaTimeInSeconds);
+    #pragma region Calculate Ball Position
+    {
+        ball.positionY += ball.derivativePositionY * deltaTimeInSeconds;
+        ball.positionX += ball.derivativePositionX * deltaTimeInSeconds;
+
+        #pragma region Player
+
+        //checking player right collision
+        if (checkBallCollisionWithPlayer(playerRight)) {
+            ball.positionX = playerRight.positionX - playerRight.halfWidth - ball.halfWidth;
+            calculateBallVelocityBasedOnPlayer(playerRight);
+        } 
+        //checking player left collision
+        else if (checkBallCollisionWithPlayer(playerLeft)) {
+            ball.positionX = playerLeft.positionX + playerLeft.halfWidth + ball.halfWidth;
+            calculateBallVelocityBasedOnPlayer(playerLeft);
+        }
+
+        #pragma endregion
+
+        #pragma region Arena
+
+        //checking arena axis Y collision
+        if (ball.positionY + ball.halfHeight > arenaHalfSizeHeight) {
+            ball.positionY = arenaHalfSizeHeight - ball.halfHeight;
+            ball.derivativePositionY *= -1.f;
+        }
+        else if (ball.positionY - ball.halfHeight < -arenaHalfSizeHeight) {
+            ball.positionY = -arenaHalfSizeHeight + ball.halfHeight;
+            ball.derivativePositionY *= -1.f;
+        }
+
+        //checking arena axis X collision
+        if(ball.positionX + ball.halfWidth > arenaHalfSizeWidth) {
+            ball.positionX = 0.f;
+            ball.positionY = 0.f;
+            ball.derivativePositionX *= -1.f;
+            ball.derivativePositionY = 0.f;
+        }
+        else if (ball.positionX - ball.halfWidth < -arenaHalfSizeWidth) {
+            ball.positionX = 0.f;
+            ball.positionY = 0.f;
+            ball.derivativePositionX *= -1.f;
+            ball.derivativePositionY = 0.f;
+        }
+
+        #pragma endregion
+    }
+    #pragma endregion
 
     renderRect(
         renderState, 
@@ -148,8 +145,6 @@ void simulateGame(
         ball.halfWidth, 
         ball.halfHeight, 
         mainColor);
-
-    //player Left
     renderRect(
         renderState, 
         playerLeft.positionX, 
@@ -157,8 +152,6 @@ void simulateGame(
         playerLeft.halfWidth, 
         playerLeft.halfHeight, 
         mainColor);
-
-    //player Right
     renderRect(
         renderState, 
         playerRight.positionX, 
