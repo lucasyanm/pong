@@ -37,31 +37,58 @@ inline void calculateBallPosition(
     ball.positionY += ball.derivativePositionY * deltaTimeInSeconds;
     ball.positionX += ball.derivativePositionX * deltaTimeInSeconds;
 
-    if( //checking player right collision
-        (//checking X axis
+    #pragma region Player Collision
+
+    //checking player right collision
+    if (//checking X axis
         ball.positionX + ball.halfWidth > playerRight.positionX - playerRight.halfWidth
         && ball.positionX - ball.halfWidth < playerRight.positionX + playerRight.halfWidth
         //checking Y axis
         && ball.positionY + ball.halfHeight > playerRight.positionY - playerRight.halfHeight
-        && ball.positionY - ball.halfHeight < playerRight.positionY + playerRight.halfHeight)
-        || // checking arena collision X axis
-        ball.positionX + ball.halfWidth > arenaHalfSizeWidth
-        ) {
+        && ball.positionY - ball.halfHeight < playerRight.positionY + playerRight.halfHeight) {
         ball.positionX = playerRight.positionX - playerRight.halfWidth - ball.halfWidth;
         ball.derivativePositionX *= -1.f;
-    } else if ( //checking player left collision
-        (//checking X axis
+
+        ball.derivativePositionY = playerRight.derivativePositionY * .75f;
+    } 
+    //checking player left collision
+    else if ( //checking X axis
         ball.positionX + ball.halfWidth > playerLeft.positionX - playerLeft.halfWidth
         && ball.positionX - ball.halfWidth < playerLeft.positionX + playerLeft.halfWidth
         //checking Y axis
         && ball.positionY + ball.halfHeight > playerLeft.positionY - playerLeft.halfHeight
-        && ball.positionY - ball.halfHeight < playerLeft.positionY + playerLeft.halfHeight)
-        || // checking arena collision X axis
-        ball.positionX - ball.halfWidth < -arenaHalfSizeWidth
-        ) {
+        && ball.positionY - ball.halfHeight < playerLeft.positionY + playerLeft.halfHeight) {
         ball.positionX = playerLeft.positionX + playerLeft.halfWidth + ball.halfWidth;
         ball.derivativePositionX *= -1.f;
+
+        ball.derivativePositionY = playerLeft.derivativePositionY * .75f;
     }
+
+    #pragma endregion
+
+    #pragma region Arena Collision
+
+    //checking arena axis Y collision
+    if (ball.positionY + ball.halfHeight > arenaHalfSizeHeight) {
+        ball.positionY = arenaHalfSizeHeight - ball.halfHeight;
+        ball.derivativePositionY *= -1.f;
+    }
+    else if (ball.positionY - ball.halfHeight < -arenaHalfSizeHeight) {
+        ball.positionY = -arenaHalfSizeHeight + ball.halfHeight;
+        ball.derivativePositionY *= -1.f;
+    }
+
+    //checking arena axis X collision
+    if(ball.positionX + ball.halfWidth > arenaHalfSizeWidth) {
+        ball.positionX = arenaHalfSizeWidth - ball.halfWidth;
+        ball.derivativePositionX *= -1.f;
+    }
+    else if (ball.positionX - ball.halfWidth < -arenaHalfSizeWidth) {
+        ball.positionX = - arenaHalfSizeWidth + ball.halfWidth;
+        ball.derivativePositionX *= -1.f;
+    }
+
+    #pragma endregion
 }
 
 // BUG: Delay to start player movement in 50% keyboard
