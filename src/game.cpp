@@ -30,6 +30,27 @@ void calculatePlayerPosition(
     }
 }
 
+bool checkBallCollisionWithPlayer(
+    Player& player
+) {
+    return // checking X axis
+        ball.positionX + ball.halfWidth > player.positionX - player.halfWidth 
+        && ball.positionX - ball.halfWidth < player.positionX + player.halfWidth
+        // checking Y axis
+        && ball.positionY + ball.halfHeight > player.positionY - player.halfHeight 
+        && ball.positionY - ball.halfHeight < player.positionY + player.halfHeight;
+}
+
+void calculateBallVelocityBasedOnPlayer(
+    Player& player
+) {
+    ball.derivativePositionX *= -1.f;
+
+    ball.derivativePositionY = 
+        (ball.positionY - player.positionY) * 2 //based on ball position relative to player
+        + player.derivativePositionY * .75f;
+}
+
 void calculateBallPosition(
     Ball& ball, 
     const float& deltaTimeInSeconds
@@ -40,32 +61,14 @@ void calculateBallPosition(
     #pragma region Player Collision
 
     //checking player right collision
-    if (//checking X axis
-        ball.positionX + ball.halfWidth > playerRight.positionX - playerRight.halfWidth
-        && ball.positionX - ball.halfWidth < playerRight.positionX + playerRight.halfWidth
-        //checking Y axis
-        && ball.positionY + ball.halfHeight > playerRight.positionY - playerRight.halfHeight
-        && ball.positionY - ball.halfHeight < playerRight.positionY + playerRight.halfHeight) {
+    if (checkBallCollisionWithPlayer(playerRight)) {
         ball.positionX = playerRight.positionX - playerRight.halfWidth - ball.halfWidth;
-        ball.derivativePositionX *= -1.f;
-
-        ball.derivativePositionY = 
-            (ball.positionY - playerRight.positionY) * 2 //based on ball position relative to player
-            + playerRight.derivativePositionY * .75f;
+        calculateBallVelocityBasedOnPlayer(playerRight);
     } 
     //checking player left collision
-    else if ( //checking X axis
-        ball.positionX + ball.halfWidth > playerLeft.positionX - playerLeft.halfWidth
-        && ball.positionX - ball.halfWidth < playerLeft.positionX + playerLeft.halfWidth
-        //checking Y axis
-        && ball.positionY + ball.halfHeight > playerLeft.positionY - playerLeft.halfHeight
-        && ball.positionY - ball.halfHeight < playerLeft.positionY + playerLeft.halfHeight) {
+    else if (checkBallCollisionWithPlayer(playerLeft)) {
         ball.positionX = playerLeft.positionX + playerLeft.halfWidth + ball.halfWidth;
-        ball.derivativePositionX *= -1.f;
-
-        ball.derivativePositionY = 
-            (ball.positionY - playerLeft.positionY) * 2 //based on ball position relative to player
-            + playerLeft.derivativePositionY * .75f;
+        calculateBallVelocityBasedOnPlayer(playerLeft);
     }
 
     #pragma endregion
