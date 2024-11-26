@@ -10,9 +10,12 @@ GLOBALVAR const UINT secColor = 0x1c1c1c;
 GLOBALVAR const float playerSpeed = 100.f; //units (pixels) per second
 
 struct Player {
-    float playerPos = 0.f;
-    float playerDerivativePos = 0.f;
-    float playerDerivativeDerivativePos = 0.f;
+    float position = 0.f;
+    float derivativePosition = 0.f; // Velocity
+    float derivativeDerivativePosition = 0.f; // Acceleration
+
+    static constexpr float halfWidth = 2.5f;
+    static constexpr float halfHeight = 12.f;
 };
 
 void simulateGame(
