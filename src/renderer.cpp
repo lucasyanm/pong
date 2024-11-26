@@ -68,8 +68,8 @@ void renderRect(
 ) {
     // calculate aspect ratio
     int greaterCommonDivisor = std::gcd(renderState.width, renderState.height);
-    int aspectWidth = renderState.width / greaterCommonDivisor;
-    int aspectHeight = renderState.height / greaterCommonDivisor;
+    int aspectWidth = greaterCommonDivisor ? renderState.width / greaterCommonDivisor : 0;
+    int aspectHeight = greaterCommonDivisor ? renderState.height / greaterCommonDivisor : 0;
 
     // define multiplier
     int multiplier = aspectHeight > aspectWidth ? renderState.width : renderState.height;
