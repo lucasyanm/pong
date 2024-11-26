@@ -9,8 +9,8 @@ struct Button {
     {
         UP,
         DOWN,
-        LEFT,
-        RIGHT,
+        W,
+        S,
 
         BUTTONS_COUNT
     };

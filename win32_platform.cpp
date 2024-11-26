@@ -127,8 +127,8 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             switch (vkCode) {
                 processButton(Button::UP, VK_UP, pressed);
                 processButton(Button::DOWN, VK_DOWN, pressed);
-                processButton(Button::LEFT, VK_LEFT, pressed);
-                processButton(Button::RIGHT, VK_RIGHT, pressed);
+                processButton(Button::W, 'W', pressed);
+                processButton(Button::S, 'S', pressed);
             }
         }
             break;
