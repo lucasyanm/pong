@@ -3,6 +3,9 @@
 Player player1;
 Player player2;
 
+//XXX: DEBUG
+#include <iostream>
+
 inline void calculatePlayerPosition(
     Player& player, 
     const float& deltaTimeInSeconds
@@ -27,18 +30,33 @@ void simulateGame(
     player1.playerDerivativeDerivativePos = 0.f;
     if (isHold(Button::DOWN))
     {
+        //XXX: DEBUG
+        std::cout << "Button DOWN pressed!" << std::endl;
+
         player1.playerDerivativeDerivativePos -= 2000;
     };
+    //XXX: debug
+    if(isReleased(Button::DOWN))
+        std::cout << "Button DOWN released!" << std::endl;
+
     if (isHold(Button::UP)) {
         player1.playerDerivativeDerivativePos += 2000;
     };
 
     player2.playerDerivativeDerivativePos = 0.f;
-    if (isHold(Button::S))
+    if (isPressed(Button::S))
     {
+        //XXX: DEBUG
+        std::cout << "Button S pressed!" << std::endl;
+
         player2.playerDerivativeDerivativePos -= 2000;
     };
-    if (isHold(Button::W)) {
+
+    //XXX: debug
+    if(isReleased(Button::S))
+        std::cout << "Button S released!" << std::endl;
+
+    if (isPressed(Button::W)) {
         player2.playerDerivativeDerivativePos += 2000;
     };
 

@@ -4,6 +4,10 @@
 #include "include/input.h"
 #include "include/game.h"
 
+// XXX: DEBUG
+#include <iostream>
+
+
 //callback
 LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -66,7 +70,9 @@ int WINAPI wWinMain(
             TranslateMessage(&message);
             DispatchMessageW(&message);
         }
-
+        
+        // Simulate
+        // BUG: It's not calling when key is only pressed, only after the release
         simulateGame(input, deltaTimeInSeconds, renderState);
 
         // Render
@@ -130,6 +136,14 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
                 processButton(Button::W, 'W', pressed);
                 processButton(Button::S, 'S', pressed);
             }
+
+            //XXX: Debug
+            if(vkCode == 'S')
+            std::cout << "Input S - Pressed:" << input.buttons[Button::S].pressed << " Changed:" << input.buttons[Button::S].changed << std::endl;
+
+            if(vkCode == VK_DOWN)
+            std::cout << "Input DOWN - Pressed:" << input.buttons[Button::DOWN].pressed << " Changed:" << input.buttons[Button::DOWN].changed << std::endl;
+
         }
             break;
         default:
@@ -139,6 +153,7 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
                 wParam, 
                 lParam);
     }
+
 
     return result;
 }
