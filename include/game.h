@@ -25,7 +25,7 @@ struct Ball : Player {
     static constexpr float halfWidth = 1.f;
     static constexpr float halfHeight = 1.f;
 
-    float derivativePositionX = 50.f; // Velocity
+    float derivativePositionX = 100.f; // Velocity
     float derivativeDerivativePositionX = 0.f; // Acceleration
 };
 

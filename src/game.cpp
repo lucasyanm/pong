@@ -47,8 +47,21 @@ inline void calculateBallPosition(
         || // checking arena collision X axis
         ball.positionX + ball.halfWidth > arenaHalfSizeWidth
         ) {
+        ball.positionX = playerRight.positionX - playerRight.halfWidth - ball.halfWidth;
         ball.derivativePositionX *= -1.f;
-    } 
+    } else if ( //checking player left collision
+        (//checking X axis
+        ball.positionX + ball.halfWidth > playerLeft.positionX - playerLeft.halfWidth
+        && ball.positionX - ball.halfWidth < playerLeft.positionX + playerLeft.halfWidth
+        //checking Y axis
+        && ball.positionY + ball.halfHeight > playerLeft.positionY - playerLeft.halfHeight
+        && ball.positionY - ball.halfHeight < playerLeft.positionY + playerLeft.halfHeight)
+        || // checking arena collision X axis
+        ball.positionX - ball.halfWidth < -arenaHalfSizeWidth
+        ) {
+        ball.positionX = playerLeft.positionX + playerLeft.halfWidth + ball.halfWidth;
+        ball.derivativePositionX *= -1.f;
+    }
 }
 
 // BUG: Delay to start player movement in 50% keyboard
