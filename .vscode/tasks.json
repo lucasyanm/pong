@@ -15,6 +15,24 @@
       "group": { "kind": "build", "isDefault": false },
       "problemMatcher": ["$gcc"],
       "detail": "Clean files generated on the build task"
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "make",
+      "group": { "kind": "build", "isDefault": false },
+      "problemMatcher": ["$gcc"],
+      "detail": "Generate .exe without debug information"
+    },
+    {
+      "label": "release",
+      "type": "shell",
+      "command": "make",
+      "group": { "kind": "build", "isDefault": false },
+      "problemMatcher": ["$gcc"],
+      "dependsOrder": "sequence",
+      "dependsOn": ["clean", "build"],
+      "detail": "Generate .exe without debug information after cleaning old object files"
     }
   ],
   "version": "2.0.0"
