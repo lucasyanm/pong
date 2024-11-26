@@ -15,18 +15,18 @@ inline void calculatePlayerPosition(
     Player& player, 
     const float& deltaTimeInSeconds
 ) {
-    player.derivativeDerivativePosition -= player.derivativePosition * 10.f;
+    player.derivativeDerivativePositionY -= player.derivativePositionY * 10.f;
 
-    player.position = player.position + player.derivativePosition * deltaTimeInSeconds + player.derivativeDerivativePosition * deltaTimeInSeconds * deltaTimeInSeconds * .5f;
-    player.derivativePosition = player.derivativePosition + player.derivativeDerivativePosition * deltaTimeInSeconds;
+    player.positionY = player.positionY + player.derivativePositionY * deltaTimeInSeconds + player.derivativeDerivativePositionY * deltaTimeInSeconds * deltaTimeInSeconds * .5f;
+    player.derivativePositionY = player.derivativePositionY + player.derivativeDerivativePositionY * deltaTimeInSeconds;
 
-    if(player.position + player.halfHeight > arenaHalfSizeHeight) {
-        player.position = arenaHalfSizeHeight - player.halfHeight;
-        player.derivativePosition = 0.f;
+    if(player.positionY + player.halfHeight > arenaHalfSizeHeight) {
+        player.positionY = arenaHalfSizeHeight - player.halfHeight;
+        player.derivativePositionY = 0.f;
     }
-    else if (player.position - player.halfHeight < -arenaHalfSizeHeight) {
-        player.position = -arenaHalfSizeHeight + player.halfHeight;
-        player.derivativePosition = 0.f;
+    else if (player.positionY - player.halfHeight < -arenaHalfSizeHeight) {
+        player.positionY = -arenaHalfSizeHeight + player.halfHeight;
+        player.derivativePositionY = 0.f;
     }
 }
 
@@ -34,7 +34,7 @@ inline void calculateBallPosition(
     Ball& ball, 
     const float& deltaTimeInSeconds
 ) {
-    ball.position += ball.derivativePosition * deltaTimeInSeconds;
+    ball.positionY += ball.derivativePositionY * deltaTimeInSeconds;
     ball.positionX += ball.derivativePositionX * deltaTimeInSeconds;
 
     if( //checking player right collision
@@ -42,8 +42,8 @@ inline void calculateBallPosition(
         ball.positionX + ball.halfWidth > playerRight.positionX - playerRight.halfWidth
         && ball.positionX - ball.halfWidth < playerRight.positionX + playerRight.halfWidth
         //checking Y axis
-        && ball.position + ball.halfHeight > playerRight.position - playerRight.halfHeight
-        && ball.position - ball.halfHeight < playerRight.position + playerRight.halfHeight)
+        && ball.positionY + ball.halfHeight > playerRight.positionY - playerRight.halfHeight
+        && ball.positionY - ball.halfHeight < playerRight.positionY + playerRight.halfHeight)
         || // checking arena collision X axis
         ball.positionX + ball.halfWidth > arenaHalfSizeWidth
         ) {
@@ -66,22 +66,22 @@ void simulateGame(
         arenaHalfSizeHeight, 
         secColor);
     //movement
-    playerRight.derivativeDerivativePosition = 0.f;
+    playerRight.derivativeDerivativePositionY = 0.f;
     if (isHold(Button::DOWN))
     {
-        playerRight.derivativeDerivativePosition -= 2000;
+        playerRight.derivativeDerivativePositionY -= 2000;
     };
     if (isHold(Button::UP)) {
-        playerRight.derivativeDerivativePosition += 2000;
+        playerRight.derivativeDerivativePositionY += 2000;
     };
 
-    playerLeft.derivativeDerivativePosition = 0.f;
+    playerLeft.derivativeDerivativePositionY = 0.f;
     if (isHold(Button::S))
     {
-        playerLeft.derivativeDerivativePosition -= 2000;
+        playerLeft.derivativeDerivativePositionY -= 2000;
     };
     if (isHold(Button::W)) {
-        playerLeft.derivativeDerivativePosition += 2000;
+        playerLeft.derivativeDerivativePositionY += 2000;
     };
 
     calculatePlayerPosition(playerRight, deltaTimeInSeconds);
@@ -93,7 +93,7 @@ void simulateGame(
     renderRect(
         renderState, 
         ball.positionX, 
-        ball.position, 
+        ball.positionY, 
         ball.halfWidth, 
         ball.halfHeight, 
         mainColor);
@@ -102,7 +102,7 @@ void simulateGame(
     renderRect(
         renderState, 
         playerLeft.positionX, 
-        playerLeft.position, 
+        playerLeft.positionY, 
         playerLeft.halfWidth, 
         playerLeft.halfHeight, 
         mainColor);
@@ -111,7 +111,7 @@ void simulateGame(
     renderRect(
         renderState, 
         playerRight.positionX, 
-        playerRight.position, 
+        playerRight.positionY, 
         playerRight.halfWidth, 
         playerLeft.halfHeight, 
         mainColor);
