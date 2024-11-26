@@ -1,7 +1,12 @@
 #include "../include/game.h"
 
-Player player1;
-Player player2;
+GLOBALVAR Player playerRight {
+    .positionX = 80.f
+};
+GLOBALVAR Player playerLeft {
+    .positionX = -80.f
+};
+GLOBALVAR Ball ball;
 
 const float arenaHalfSizeWidth = 85;
 const float arenaHalfSizeHeight = 45;
@@ -25,6 +30,27 @@ inline void calculatePlayerPosition(
     }
 }
 
+inline void calculateBallPosition(
+    Ball& ball, 
+    const float& deltaTimeInSeconds
+) {
+    ball.position += ball.derivativePosition * deltaTimeInSeconds;
+    ball.positionX += ball.derivativePositionX * deltaTimeInSeconds;
+
+    if( //checking player right collision
+        (//checking X axis
+        ball.positionX + ball.halfWidth > playerRight.positionX - playerRight.halfWidth
+        && ball.positionX - ball.halfWidth < playerRight.positionX + playerRight.halfWidth
+        //checking Y axis
+        && ball.position + ball.halfHeight > playerRight.position - playerRight.halfHeight
+        && ball.position - ball.halfHeight < playerRight.position + playerRight.halfHeight)
+        || // checking arena collision X axis
+        ball.positionX + ball.halfWidth > arenaHalfSizeWidth
+        ) {
+        ball.derivativePositionX *= -1.f;
+    } 
+}
+
 // BUG: Delay to start player movement in 50% keyboard
 void simulateGame(
     const Input& input, 
@@ -39,47 +65,55 @@ void simulateGame(
         arenaHalfSizeWidth, 
         arenaHalfSizeHeight, 
         secColor);
-
     //movement
-    player1.derivativeDerivativePosition = 0.f;
+    playerRight.derivativeDerivativePosition = 0.f;
     if (isHold(Button::DOWN))
     {
-        player1.derivativeDerivativePosition -= 2000;
+        playerRight.derivativeDerivativePosition -= 2000;
     };
     if (isHold(Button::UP)) {
-        player1.derivativeDerivativePosition += 2000;
+        playerRight.derivativeDerivativePosition += 2000;
     };
 
-    player2.derivativeDerivativePosition = 0.f;
+    playerLeft.derivativeDerivativePosition = 0.f;
     if (isHold(Button::S))
     {
-        player2.derivativeDerivativePosition -= 2000;
+        playerLeft.derivativeDerivativePosition -= 2000;
     };
     if (isHold(Button::W)) {
-        player2.derivativeDerivativePosition += 2000;
+        playerLeft.derivativeDerivativePosition += 2000;
     };
 
-    calculatePlayerPosition(player1, deltaTimeInSeconds);
-    calculatePlayerPosition(player2, deltaTimeInSeconds);
+    calculatePlayerPosition(playerRight, deltaTimeInSeconds);
+    calculatePlayerPosition(playerLeft, deltaTimeInSeconds);
 
     //ball
-    renderRect(renderState, 0, 0, 1, 1, mainColor);
+    calculateBallPosition(ball, deltaTimeInSeconds);
+
+    renderRect(
+        renderState, 
+        ball.positionX, 
+        ball.position, 
+        ball.halfWidth, 
+        ball.halfHeight, 
+        mainColor);
+
+    //player Left
+    renderRect(
+        renderState, 
+        playerLeft.positionX, 
+        playerLeft.position, 
+        playerLeft.halfWidth, 
+        playerLeft.halfHeight, 
+        mainColor);
 
     //player Right
     renderRect(
         renderState, 
-        -80, 
-        player2.position, 
-        player2.halfWidth, 
-        player2.halfHeight, 
-        mainColor);
-    //player Left
-    renderRect(
-        renderState, 
-        80, 
-        player1.position, 
-        player1.halfWidth, 
-        player2.halfHeight, 
+        playerRight.positionX, 
+        playerRight.position, 
+        playerRight.halfWidth, 
+        playerLeft.halfHeight, 
         mainColor);
 }
 
