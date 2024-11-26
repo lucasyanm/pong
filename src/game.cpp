@@ -14,6 +14,15 @@ inline void calculatePlayerPosition(
 
     player.position = player.position + player.derivativePosition * deltaTimeInSeconds + player.derivativeDerivativePosition * deltaTimeInSeconds * deltaTimeInSeconds * .5f;
     player.derivativePosition = player.derivativePosition + player.derivativeDerivativePosition * deltaTimeInSeconds;
+
+    if(player.position + player.halfHeight > arenaHalfSizeHeight) {
+        player.position = arenaHalfSizeHeight - player.halfHeight;
+        player.derivativePosition = 0.f;
+    }
+    else if (player.position - player.halfHeight < -arenaHalfSizeHeight) {
+        player.position = -arenaHalfSizeHeight + player.halfHeight;
+        player.derivativePosition = 0.f;
+    }
 }
 
 // BUG: Delay to start player movement in 50% keyboard
