@@ -49,7 +49,9 @@ inline void calculateBallPosition(
         ball.positionX = playerRight.positionX - playerRight.halfWidth - ball.halfWidth;
         ball.derivativePositionX *= -1.f;
 
-        ball.derivativePositionY = playerRight.derivativePositionY * .75f;
+        ball.derivativePositionY = 
+            (ball.positionY - playerRight.positionY) * 2 //based on ball position relative to player
+            + playerRight.derivativePositionY * .75f;
     } 
     //checking player left collision
     else if ( //checking X axis
@@ -61,7 +63,9 @@ inline void calculateBallPosition(
         ball.positionX = playerLeft.positionX + playerLeft.halfWidth + ball.halfWidth;
         ball.derivativePositionX *= -1.f;
 
-        ball.derivativePositionY = playerLeft.derivativePositionY * .75f;
+        ball.derivativePositionY = 
+            (ball.positionY - playerLeft.positionY) * 2 //based on ball position relative to player
+            + playerLeft.derivativePositionY * .75f;
     }
 
     #pragma endregion
