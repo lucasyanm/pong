@@ -11,7 +11,7 @@ GLOBALVAR Ball ball;
 const float arenaHalfSizeWidth = 85;
 const float arenaHalfSizeHeight = 45;
 
-inline void calculatePlayerPosition(
+void calculatePlayerPosition(
     Player& player, 
     const float& deltaTimeInSeconds
 ) {
@@ -30,7 +30,7 @@ inline void calculatePlayerPosition(
     }
 }
 
-inline void calculateBallPosition(
+void calculateBallPosition(
     Ball& ball, 
     const float& deltaTimeInSeconds
 ) {
