@@ -1,11 +1,7 @@
 #include "../include/game.h"
 
-GLOBALVAR Player playerRight {
-    .positionX = 80.f
-};
-GLOBALVAR Player playerLeft {
-    .positionX = -80.f
-};
+GLOBALVAR Player playerRight {80.f};
+GLOBALVAR Player playerLeft {-80.f};
 GLOBALVAR Ball ball;
 
 const float arenaHalfSizeWidth = 85;
