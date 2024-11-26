@@ -69,7 +69,8 @@
       "icon": "flame"
     },
     "XXX": {
-      "icon": "x"
+      "icon": "x",
+      "background": "#f54e4e"
     },
     "[ ]": {
       "icon": "issue-draft"
