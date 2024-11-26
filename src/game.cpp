@@ -84,12 +84,16 @@ inline void calculateBallPosition(
 
     //checking arena axis X collision
     if(ball.positionX + ball.halfWidth > arenaHalfSizeWidth) {
-        ball.positionX = arenaHalfSizeWidth - ball.halfWidth;
+        ball.positionX = 0.f;
+        ball.positionY = 0.f;
         ball.derivativePositionX *= -1.f;
+        ball.derivativePositionY = 0.f;
     }
     else if (ball.positionX - ball.halfWidth < -arenaHalfSizeWidth) {
-        ball.positionX = - arenaHalfSizeWidth + ball.halfWidth;
+        ball.positionX = 0.f;
+        ball.positionY = 0.f;
         ball.derivativePositionX *= -1.f;
+        ball.derivativePositionY = 0.f;
     }
 
     #pragma endregion
