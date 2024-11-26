@@ -35,6 +35,29 @@ void clearScreen(RenderState& renderState, UINT32 color) {
     }
 }
 
+void renderRectInPixels(
+    RenderState& renderState,
+    int x0, 
+    int y0, 
+    int x1, 
+    int y1, 
+    UINT32 color
+) {
+    x0 = std::clamp(x0, 0, renderState.width);
+    y0 = std::clamp(y0, 0, renderState.height);
+    x1 = std::clamp(x1, 0, renderState.width);
+    y1 = std::clamp(y1, 0, renderState.height);
+
+    for(int y = y0; y < y1; y++) {
+
+        UINT32* pixel = (UINT32*)renderState.memory + x0 + y * renderState.width;
+
+        for(int x = x0; x < x1; x++) {
+            *pixel++ = color;
+        }
+    }
+}
+
 void renderRect(
     RenderState& renderState,
     int middleCoordX, 
@@ -67,29 +90,6 @@ void renderRect(
     int y1 = middleCoordY + height;
 
     renderRectInPixels(renderState, x0, y0, x1, y1, color);
-}
-
-void renderRectInPixels(
-    RenderState& renderState,
-    int x0, 
-    int y0, 
-    int x1, 
-    int y1, 
-    UINT32 color
-) {
-    x0 = std::clamp(x0, 0, renderState.width);
-    y0 = std::clamp(y0, 0, renderState.height);
-    x1 = std::clamp(x1, 0, renderState.width);
-    y1 = std::clamp(y1, 0, renderState.height);
-
-    for(int y = y0; y < y1; y++) {
-
-        UINT32* pixel = (UINT32*)renderState.memory + x0 + y * renderState.width;
-
-        for(int x = x0; x < x1; x++) {
-            *pixel++ = color;
-        }
-    }
 }
 
 void render(const RenderState& renderState, HDC deviceContext) {

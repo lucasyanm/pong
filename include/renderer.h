@@ -45,14 +45,6 @@ void renderRect(
     int height, 
     UINT32 color
 );
-void renderRectInPixels(
-    RenderState& renderState,
-    int x0, 
-    int y0, 
-    int x1, 
-    int y1, 
-    UINT32 color
-);
 
 void render(const RenderState& renderState, HDC deviceContext);
 #pragma endregion

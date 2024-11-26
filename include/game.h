@@ -20,8 +20,4 @@ void simulateGame(
     const float& deltaTimeInSeconds, 
     RenderState& renderState);
 
-void calculatePlayerPosition(
-    Player& player, 
-    const float& deltaTimeInSeconds);
-
 #endif
