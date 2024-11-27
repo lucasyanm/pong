@@ -115,7 +115,7 @@ void renderNumberCharacter(
 ) {
     switch (number) {
         case 0: {
-            //left
+            //all left
             renderRect(
                 renderState, 
                 middleCoordX - width,
@@ -123,7 +123,7 @@ void renderNumberCharacter(
                 width / 2,
                 height * 2.5f,
                 color);
-            //right
+            //all right
             renderRect(
                 renderState, 
                 middleCoordX + width,
@@ -131,7 +131,7 @@ void renderNumberCharacter(
                 width / 2,
                 height * 2.5f,
                 color);
-            //bottom
+            //middle bottom
             renderRect(
                 renderState, 
                 middleCoordX,
@@ -139,7 +139,7 @@ void renderNumberCharacter(
                 width,
                 height / 2.f,
                 color);
-            //top
+            //middle top
             renderRect(
                 renderState, 
                 middleCoordX,
@@ -150,7 +150,7 @@ void renderNumberCharacter(
         }
             break;
         case 1: {
-            //right
+            //all right
             renderRect(
                 renderState, 
                 middleCoordX + width,
@@ -161,7 +161,7 @@ void renderNumberCharacter(
         }
             break;
         case 2: {
-            //top
+            //all top
             renderRect(
                 renderState,
                 middleCoordX,
@@ -169,8 +169,7 @@ void renderNumberCharacter(
                 width * 1.5f,
                 height / 2,
                 color);
-
-            //between
+            //between top right
             renderRect(
                 renderState,
                 middleCoordX + width,
@@ -178,8 +177,7 @@ void renderNumberCharacter(
                 width / 2.f,
                 height / 2.f,
                 color);
-
-            //middle
+            //all middle
             renderRect(
                 renderState,
                 middleCoordX,
@@ -187,8 +185,7 @@ void renderNumberCharacter(
                 width * 1.5f,
                 height / 2.f,
                 color);
-
-            //between
+            //between bottom left
             renderRect(
                 renderState,
                 middleCoordX - width,
@@ -196,14 +193,266 @@ void renderNumberCharacter(
                 width / 2.f,
                 height / 2.f,
                 color);
-            
-            //bottom
+            //all bottom
             renderRect(
                 renderState,
                 middleCoordX,
                 middleCoordY - height * 2.f,
                 width * 1.5f,
                 height / 2.f,
+                color);
+        }
+            break;
+        case 3: {
+            //all top
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY + height * 2.f,
+                width * 1.5f,
+                height / 2,
+                color);
+            //between top right
+            renderRect(
+                renderState,
+                middleCoordX + width,
+                middleCoordY + height,
+                width / 2.f,
+                height / 2.f,
+                color);
+            //all middle
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY,
+                width * 1.5f,
+                height / 2.f,
+                color);
+            //between bottom left
+            renderRect(
+                renderState,
+                middleCoordX + width,
+                middleCoordY - height,
+                width / 2.f,
+                height / 2.f,
+                color);
+            //all bottom
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY - height * 2.f,
+                width * 1.5f,
+                height / 2.f,
+                color);
+        }
+            break;
+        case 4: {
+            //all right
+            renderRect(
+                renderState, 
+                middleCoordX + width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
+                color);
+            //all middle
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY,
+                width * 1.5f,
+                height / 2.f,
+                color);
+            //top half left
+            renderRect(
+                renderState, 
+                middleCoordX - width,
+                middleCoordY + height,
+                width / 2,
+                height * 1.5f,
+                color);
+        }
+            break;
+        case 5: {
+            //all top
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY + height * 2.f,
+                width * 1.5f,
+                height / 2,
+                color);
+            //between top left
+            renderRect(
+                renderState,
+                middleCoordX - width,
+                middleCoordY + height,
+                width / 2.f,
+                height / 2.f,
+                color);
+            //all middle
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY,
+                width * 1.5f,
+                height / 2.f,
+                color);
+            //between bottom right
+            renderRect(
+                renderState,
+                middleCoordX + width,
+                middleCoordY - height,
+                width / 2.f,
+                height / 2.f,
+                color);
+            //all bottom
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY - height * 2.f,
+                width * 1.5f,
+                height / 2.f,
+                color);
+        }
+            break;
+        case 6: {
+            //half right top
+            renderRect(
+                renderState,
+                middleCoordX + width / 2.f,
+                middleCoordY + height * 2.f,
+                width,
+                height / 2.f,
+                color);
+            //all left
+            renderRect(
+                renderState, 
+                middleCoordX - width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
+                color);
+            //half right middle
+            renderRect(
+                renderState,
+                middleCoordX + width / 2.f,
+                middleCoordY,
+                width,
+                height / 2.f,
+                color);
+            //between bottom right
+            renderRect(
+                renderState,
+                middleCoordX + width,
+                middleCoordY - height,
+                width / 2.f,
+                height / 2.f,
+                color);
+            //half right bottom
+            renderRect(
+                renderState,
+                middleCoordX + width / 2.f,
+                middleCoordY - height * 2.f,
+                width,
+                height / 2.f,
+                color);
+        }
+            break;
+        case 7: {
+            //all top
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY + height * 2.f,
+                width * 1.5f,
+                height / 2,
+                color);
+            //all right
+            renderRect(
+                renderState, 
+                middleCoordX + width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
+                color);
+        }
+            break;
+        case 8: {
+            //all left
+            renderRect(
+                renderState, 
+                middleCoordX - width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
+                color);
+            //all right
+            renderRect(
+                renderState, 
+                middleCoordX + width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
+                color);
+            //middle top
+            renderRect(
+                renderState, 
+                middleCoordX,
+                middleCoordY + height * 2.f,
+                width,
+                height / 2.f,
+                color);
+            //middle middle
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY,
+                width / 2.f,
+                height / 2,
+                color);
+            //middle bottom
+            renderRect(
+                renderState, 
+                middleCoordX,
+                middleCoordY - height * 2.f,
+                width,
+                height / 2.f,
+                color);
+        }  
+            break;
+        case 9: {
+            //top half left
+            renderRect(
+                renderState, 
+                middleCoordX - width,
+                middleCoordY + height,
+                width / 2,
+                height * 1.5f,
+                color);
+            //middle top
+            renderRect(
+                renderState, 
+                middleCoordX,
+                middleCoordY + height * 2.f,
+                width,
+                height / 2.f,
+                color);
+            //middle middle
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY,
+                width / 2.f,
+                height / 2,
+                color);
+            //all right
+            renderRect(
+                renderState, 
+                middleCoordX + width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
                 color);
         }
             break;
