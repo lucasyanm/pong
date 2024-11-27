@@ -72,7 +72,7 @@ void simulateGame(
         arenaHalfSizeHeight, 
         secColor);
 
-    //movement
+    #pragma region Movment
     playerRight.derivativeDerivativePositionY = 0.f;
     if (isHold(Button::DOWN))
     {
@@ -93,6 +93,7 @@ void simulateGame(
 
     calculatePlayerPosition(playerRight, deltaTimeInSeconds);
     calculatePlayerPosition(playerLeft, deltaTimeInSeconds);
+    #pragma endregion
 
     #pragma region Calculate Ball Pos
     {
@@ -151,6 +152,7 @@ void simulateGame(
     }
     #pragma endregion
 
+    #pragma region Render Objects
     renderNumberCharacter(
         renderState, 
         playerLeft.score.points,
@@ -191,6 +193,7 @@ void simulateGame(
         playerRight.halfWidth, 
         playerLeft.halfHeight, 
         mainColor);
+    #pragma endregion
 }
 
 
