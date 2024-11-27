@@ -1,6 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+//TODO: Change name to KeyboardButton
 struct Button {
     bool pressed = false;
     bool changed = false;
@@ -11,6 +12,9 @@ struct Button {
         DOWN,
         W,
         S,
+        LEFT,
+        RIGHT,
+        ENTER,
 
         BUTTONS_COUNT
     };

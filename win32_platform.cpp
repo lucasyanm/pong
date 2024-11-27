@@ -129,6 +129,9 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
                 processButton(Button::DOWN, VK_DOWN, pressed);
                 processButton(Button::W, 'W', pressed);
                 processButton(Button::S, 'S', pressed);
+                processButton(Button::LEFT, VK_LEFT, pressed);
+                processButton(Button::RIGHT, VK_RIGHT, pressed);
+                processButton(Button::ENTER, VK_RETURN, pressed);
             }
         }
             break;

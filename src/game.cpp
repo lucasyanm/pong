@@ -1,6 +1,12 @@
 #include "../include/game.h"
 #include <algorithm>
 
+#pragma region Global Menu Var
+GLOBALVAR MenuButton singlePlayerButton (-15.f, 0.f, true);
+GLOBALVAR MenuButton localMultiplayerButton {15.f, 0.f};
+#pragma endregion
+
+#pragma region Global Game Var
 const float arenaHalfSizeWidth = 85;
 const float arenaHalfSizeHeight = 45;
 
@@ -16,6 +22,7 @@ GLOBALVAR Player playerLeft {
     arenaHalfSizeHeight - 10.f};
 
 GLOBALVAR Ball ball;
+#pragma endregion
 
 
 void calculatePlayerPosition(
@@ -73,144 +80,187 @@ void simulateGame(
         arenaHalfSizeHeight, 
         secColor);
 
-    #pragma region Movment
-
-    switch (gameMode)
+    switch (currentScreen)
     {
-        case SINGLEPLAYER:
-            playerRight.derivativeDerivativePositionY = std::max(
-            -1300.f,
-            std::min(
-                1300.f, 
-                (ball.positionY - playerRight.positionY) * 100.f)
-            );
-            break;
-        case LOCAL_MULTIPLAYER:
-            playerRight.derivativeDerivativePositionY = 0.f;
-            if (isHold(Button::DOWN))
+        case MAIN_MENU: {
+            if(isHold(Button::RIGHT)) {
+                gameMode = LOCAL_MULTIPLAYER;
+            }
+            else if(isHold(Button::LEFT)) {
+                gameMode = SINGLEPLAYER;
+            }
+            else if (isHold(Button::ENTER))
             {
-                playerRight.derivativeDerivativePositionY -= 2000;
+                currentScreen = GAME;
+            }            
+
+            renderRect(
+                renderState, 
+                singlePlayerButton.positionX, 
+                singlePlayerButton.positionY,
+                singlePlayerButton.halfWidth, 
+                singlePlayerButton.halfHeight, 
+                gameMode == SINGLEPLAYER 
+                    ?  mainColor
+                    : menuNotSelectedColor);
+
+            renderRect(
+                renderState, 
+                localMultiplayerButton.positionX, 
+                localMultiplayerButton.positionY,
+                localMultiplayerButton.halfWidth, 
+                localMultiplayerButton.halfHeight, 
+                gameMode == LOCAL_MULTIPLAYER 
+                    ? mainColor 
+                    : menuNotSelectedColor);
+        }
+            break;
+        case GAME: {
+            #pragma region Movment
+            switch (gameMode)
+            {
+                case SINGLEPLAYER:
+                    playerRight.derivativeDerivativePositionY = std::max(
+                    -1300.f,
+                    std::min(
+                        1300.f, 
+                        (ball.positionY - playerRight.positionY) * 100.f)
+                    );
+                    break;
+                case LOCAL_MULTIPLAYER:
+                    playerRight.derivativeDerivativePositionY = 0.f;
+                    if (isHold(Button::DOWN))
+                    {
+                        playerRight.derivativeDerivativePositionY -= 2000;
+                    };
+                    if (isHold(Button::UP)) {
+                        playerRight.derivativeDerivativePositionY += 2000;
+                    };
+                    break;
+                default:
+                    break;
+            }
+
+            playerLeft.derivativeDerivativePositionY = 0.f;
+            if (isHold(Button::S))
+            {
+                playerLeft.derivativeDerivativePositionY -= 2000;
             };
-            if (isHold(Button::UP)) {
-                playerRight.derivativeDerivativePositionY += 2000;
+            if (isHold(Button::W)) {
+                playerLeft.derivativeDerivativePositionY += 2000;
             };
+
+            calculatePlayerPosition(playerRight, deltaTimeInSeconds);
+            calculatePlayerPosition(playerLeft, deltaTimeInSeconds);
+            #pragma endregion
+
+            #pragma region Calculate Ball Pos
+            {
+                ball.positionY += ball.derivativePositionY * deltaTimeInSeconds;
+                ball.positionX += ball.derivativePositionX * deltaTimeInSeconds;
+
+                #pragma region Player
+
+                //checking player right collision
+                if (checkBallCollisionWithPlayer(playerRight)) {
+                    ball.positionX = playerRight.positionX - playerRight.halfWidth - ball.halfWidth;
+                    calculateBallVelocityBasedOnPlayer(playerRight);
+                } 
+                //checking player left collision
+                else if (checkBallCollisionWithPlayer(playerLeft)) {
+                    ball.positionX = playerLeft.positionX + playerLeft.halfWidth + ball.halfWidth;
+                    calculateBallVelocityBasedOnPlayer(playerLeft);
+                }
+
+                #pragma endregion
+
+                #pragma region Arena
+
+                //checking arena axis Y collision
+                if (ball.positionY + ball.halfHeight > arenaHalfSizeHeight) {
+                    ball.positionY = arenaHalfSizeHeight - ball.halfHeight;
+                    ball.derivativePositionY *= -1.f;
+                }
+                else if (ball.positionY - ball.halfHeight < -arenaHalfSizeHeight) {
+                    ball.positionY = -arenaHalfSizeHeight + ball.halfHeight;
+                    ball.derivativePositionY *= -1.f;
+                }
+
+                //checking arena axis X collision
+
+                //right collision
+                if(ball.positionX + ball.halfWidth > arenaHalfSizeWidth) {
+                    ball.positionX = 0.f;
+                    ball.positionY = 0.f;
+                    ball.derivativePositionX *= -1.f;
+                    ball.derivativePositionY = 0.f;
+
+                    playerLeft.score.points++;
+                }
+                //left collision
+                else if (ball.positionX - ball.halfWidth < -arenaHalfSizeWidth) {
+                    ball.positionX = 0.f;
+                    ball.positionY = 0.f;
+                    ball.derivativePositionX *= -1.f;
+                    ball.derivativePositionY = 0.f;
+
+                    playerRight.score.points++;
+                }
+
+                #pragma endregion
+            }
+            #pragma endregion
+
+            #pragma region Render Objects
+            renderNumberCharacter(
+                renderState, 
+                playerLeft.score.points,
+                playerLeft.score.positionX, 
+                playerLeft.score.positionY, 
+                playerLeft.score.halfWidth * 2, 
+                playerLeft.score.halfHeight * 2, 
+                mainColor
+            );
+            renderNumberCharacter(
+                renderState, 
+                playerRight.score.points,
+                playerRight.score.positionX, 
+                playerRight.score.positionY, 
+                playerRight.score.halfWidth * 2, 
+                playerRight.score.halfHeight * 2, 
+                mainColor
+            );
+
+            renderRect(
+                renderState, 
+                ball.positionX, 
+                ball.positionY, 
+                ball.halfWidth, 
+                ball.halfHeight, 
+                mainColor);
+            renderRect(
+                renderState, 
+                playerLeft.positionX, 
+                playerLeft.positionY, 
+                playerLeft.halfWidth, 
+                playerLeft.halfHeight, 
+                mainColor);
+            renderRect(
+                renderState, 
+                playerRight.positionX, 
+                playerRight.positionY, 
+                playerRight.halfWidth, 
+                playerLeft.halfHeight, 
+                mainColor);
+            #pragma endregion
+        }
             break;
         default:
             break;
     }
 
-    playerLeft.derivativeDerivativePositionY = 0.f;
-    if (isHold(Button::S))
-    {
-        playerLeft.derivativeDerivativePositionY -= 2000;
-    };
-    if (isHold(Button::W)) {
-        playerLeft.derivativeDerivativePositionY += 2000;
-    };
 
-    calculatePlayerPosition(playerRight, deltaTimeInSeconds);
-    calculatePlayerPosition(playerLeft, deltaTimeInSeconds);
-    #pragma endregion
-
-    #pragma region Calculate Ball Pos
-    {
-        ball.positionY += ball.derivativePositionY * deltaTimeInSeconds;
-        ball.positionX += ball.derivativePositionX * deltaTimeInSeconds;
-
-        #pragma region Player
-
-        //checking player right collision
-        if (checkBallCollisionWithPlayer(playerRight)) {
-            ball.positionX = playerRight.positionX - playerRight.halfWidth - ball.halfWidth;
-            calculateBallVelocityBasedOnPlayer(playerRight);
-        } 
-        //checking player left collision
-        else if (checkBallCollisionWithPlayer(playerLeft)) {
-            ball.positionX = playerLeft.positionX + playerLeft.halfWidth + ball.halfWidth;
-            calculateBallVelocityBasedOnPlayer(playerLeft);
-        }
-
-        #pragma endregion
-
-        #pragma region Arena
-
-        //checking arena axis Y collision
-        if (ball.positionY + ball.halfHeight > arenaHalfSizeHeight) {
-            ball.positionY = arenaHalfSizeHeight - ball.halfHeight;
-            ball.derivativePositionY *= -1.f;
-        }
-        else if (ball.positionY - ball.halfHeight < -arenaHalfSizeHeight) {
-            ball.positionY = -arenaHalfSizeHeight + ball.halfHeight;
-            ball.derivativePositionY *= -1.f;
-        }
-
-        //checking arena axis X collision
-
-        //right collision
-        if(ball.positionX + ball.halfWidth > arenaHalfSizeWidth) {
-            ball.positionX = 0.f;
-            ball.positionY = 0.f;
-            ball.derivativePositionX *= -1.f;
-            ball.derivativePositionY = 0.f;
-
-            playerLeft.score.points++;
-        }
-        //left collision
-        else if (ball.positionX - ball.halfWidth < -arenaHalfSizeWidth) {
-            ball.positionX = 0.f;
-            ball.positionY = 0.f;
-            ball.derivativePositionX *= -1.f;
-            ball.derivativePositionY = 0.f;
-
-            playerRight.score.points++;
-        }
-
-        #pragma endregion
-    }
-    #pragma endregion
-
-    #pragma region Render Objects
-        renderNumberCharacter(
-            renderState, 
-            playerLeft.score.points,
-            playerLeft.score.positionX, 
-            playerLeft.score.positionY, 
-            playerLeft.score.halfWidth * 2, 
-            playerLeft.score.halfHeight * 2, 
-            mainColor
-        );
-        renderNumberCharacter(
-            renderState, 
-            playerRight.score.points,
-            playerRight.score.positionX, 
-            playerRight.score.positionY, 
-            playerRight.score.halfWidth * 2, 
-            playerRight.score.halfHeight * 2, 
-            mainColor
-        );
-
-        renderRect(
-            renderState, 
-            ball.positionX, 
-            ball.positionY, 
-            ball.halfWidth, 
-            ball.halfHeight, 
-            mainColor);
-        renderRect(
-            renderState, 
-            playerLeft.positionX, 
-            playerLeft.positionY, 
-            playerLeft.halfWidth, 
-            playerLeft.halfHeight, 
-            mainColor);
-        renderRect(
-            renderState, 
-            playerRight.positionX, 
-            playerRight.positionY, 
-            playerRight.halfWidth, 
-            playerLeft.halfHeight, 
-            mainColor);
-        #pragma endregion
+       
 }
 
 
