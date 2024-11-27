@@ -74,23 +74,30 @@ void simulateGame(
         secColor);
 
     #pragma region Movment
-    #if 0 //HACK: Need to add a way to select player or AI
-    playerRight.derivativeDerivativePositionY = 0.f;
-    if (isHold(Button::DOWN))
+
+    switch (gameMode)
     {
-        playerRight.derivativeDerivativePositionY -= 2000;
-    };
-    if (isHold(Button::UP)) {
-        playerRight.derivativeDerivativePositionY += 2000;
-    };
-    #else
-    playerRight.derivativeDerivativePositionY = std::max(
-        -1300.f,
-        std::min(
-            1300.f, 
-            (ball.positionY - playerRight.positionY) * 100.f)
-        );
-    #endif
+        case SINGLEPLAYER:
+            playerRight.derivativeDerivativePositionY = std::max(
+            -1300.f,
+            std::min(
+                1300.f, 
+                (ball.positionY - playerRight.positionY) * 100.f)
+            );
+            break;
+        case LOCAL_MULTIPLAYER:
+            playerRight.derivativeDerivativePositionY = 0.f;
+            if (isHold(Button::DOWN))
+            {
+                playerRight.derivativeDerivativePositionY -= 2000;
+            };
+            if (isHold(Button::UP)) {
+                playerRight.derivativeDerivativePositionY += 2000;
+            };
+            break;
+        default:
+            break;
+    }
 
     playerLeft.derivativeDerivativePositionY = 0.f;
     if (isHold(Button::S))
@@ -163,47 +170,47 @@ void simulateGame(
     #pragma endregion
 
     #pragma region Render Objects
-    renderNumberCharacter(
-        renderState, 
-        playerLeft.score.points,
-        playerLeft.score.positionX, 
-        playerLeft.score.positionY, 
-        playerLeft.score.halfWidth * 2, 
-        playerLeft.score.halfHeight * 2, 
-        mainColor
-    );
-    renderNumberCharacter(
-        renderState, 
-        playerRight.score.points,
-        playerRight.score.positionX, 
-        playerRight.score.positionY, 
-        playerRight.score.halfWidth * 2, 
-        playerRight.score.halfHeight * 2, 
-        mainColor
-    );
+        renderNumberCharacter(
+            renderState, 
+            playerLeft.score.points,
+            playerLeft.score.positionX, 
+            playerLeft.score.positionY, 
+            playerLeft.score.halfWidth * 2, 
+            playerLeft.score.halfHeight * 2, 
+            mainColor
+        );
+        renderNumberCharacter(
+            renderState, 
+            playerRight.score.points,
+            playerRight.score.positionX, 
+            playerRight.score.positionY, 
+            playerRight.score.halfWidth * 2, 
+            playerRight.score.halfHeight * 2, 
+            mainColor
+        );
 
-    renderRect(
-        renderState, 
-        ball.positionX, 
-        ball.positionY, 
-        ball.halfWidth, 
-        ball.halfHeight, 
-        mainColor);
-    renderRect(
-        renderState, 
-        playerLeft.positionX, 
-        playerLeft.positionY, 
-        playerLeft.halfWidth, 
-        playerLeft.halfHeight, 
-        mainColor);
-    renderRect(
-        renderState, 
-        playerRight.positionX, 
-        playerRight.positionY, 
-        playerRight.halfWidth, 
-        playerLeft.halfHeight, 
-        mainColor);
-    #pragma endregion
+        renderRect(
+            renderState, 
+            ball.positionX, 
+            ball.positionY, 
+            ball.halfWidth, 
+            ball.halfHeight, 
+            mainColor);
+        renderRect(
+            renderState, 
+            playerLeft.positionX, 
+            playerLeft.positionY, 
+            playerLeft.halfWidth, 
+            playerLeft.halfHeight, 
+            mainColor);
+        renderRect(
+            renderState, 
+            playerRight.positionX, 
+            playerRight.positionY, 
+            playerRight.halfWidth, 
+            playerLeft.halfHeight, 
+            mainColor);
+        #pragma endregion
 }
 
 

@@ -11,6 +11,14 @@ GLOBALVAR const UINT secColor = 0x1c1c1c;
 //units (pixels) per second
 GLOBALVAR const float playerSpeed = 100.f;
 
+enum GameMode
+{
+    SINGLEPLAYER,
+    LOCAL_MULTIPLAYER
+};
+
+GLOBALVAR GameMode gameMode = SINGLEPLAYER;
+
 #pragma region Primary Objects
 struct Object {
     float positionX = 0.f;
