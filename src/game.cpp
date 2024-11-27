@@ -10,9 +10,6 @@ GLOBALVAR CurrentScreen currentScreen = MAIN_MENU;
 #pragma endregion
 
 #pragma region Global Game Var
-const float arenaHalfSizeWidth = 85;
-const float arenaHalfSizeHeight = 45;
-
 //Player 1
 GLOBALVAR Player playerRight { 
     80.f, 

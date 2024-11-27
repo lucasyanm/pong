@@ -13,6 +13,9 @@ GLOBALVAR const UINT menuNotSelectedColor = 0x2c2c2c;
 //units (pixels) per second
 GLOBALVAR const float playerSpeed = 100.f;
 
+const float arenaHalfSizeWidth = 85;
+const float arenaHalfSizeHeight = 45;
+
 enum GameMode
 {
     SINGLEPLAYER,
