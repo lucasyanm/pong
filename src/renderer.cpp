@@ -62,8 +62,8 @@ void renderRect(
     RenderState& renderState,
     int middleCoordX, 
     int middleCoordY, 
-    int width, 
-    int height, 
+    int halfWidth, 
+    int halfHeight, 
     UINT32 color
 ) {
     // calculate aspect ratio
@@ -77,17 +77,17 @@ void renderRect(
     // convert to percentage
     middleCoordX *= scale * multiplier;
     middleCoordY *= scale * multiplier;
-    width *= scale * multiplier;
-    height *= scale * multiplier;
+    halfWidth *= scale * multiplier;
+    halfHeight *= scale * multiplier;
 
     middleCoordX += renderState.width / 2;
     middleCoordY += renderState.height / 2;
 
     // convert to pixel coord
-    int x0 = middleCoordX - width;
-    int y0 = middleCoordY - height;
-    int x1 = middleCoordX + width;
-    int y1 = middleCoordY + height;
+    int x0 = middleCoordX - halfWidth;
+    int y0 = middleCoordY - halfHeight;
+    int x1 = middleCoordX + halfWidth;
+    int y1 = middleCoordY + halfHeight;
 
     renderRectInPixels(renderState, x0, y0, x1, y1, color);
 }
@@ -103,6 +103,115 @@ void render(const RenderState& renderState, HDC deviceContext) {
         SRCCOPY
     );
 }
+
+void renderNumberCharacter(
+    RenderState& renderState, 
+    int number,
+    int middleCoordX, 
+    int middleCoordY, 
+    int width, 
+    int height, 
+    UINT32 color
+) {
+    switch (number) {
+        case 0: {
+            //left
+            renderRect(
+                renderState, 
+                middleCoordX - width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
+                color);
+            //right
+            renderRect(
+                renderState, 
+                middleCoordX + width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
+                color);
+            //bottom
+            renderRect(
+                renderState, 
+                middleCoordX,
+                middleCoordY - height * 2.f,
+                width,
+                height / 2.f,
+                color);
+            //top
+            renderRect(
+                renderState, 
+                middleCoordX,
+                middleCoordY + height * 2.f,
+                width,
+                height / 2.f,
+                color);
+        }
+            break;
+        case 1: {
+            //right
+            renderRect(
+                renderState, 
+                middleCoordX + width,
+                middleCoordY,
+                width / 2,
+                height * 2.5f,
+                color);
+        }
+            break;
+        case 2: {
+            //top
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY + height * 2.f,
+                width * 1.5f,
+                height / 2,
+                color);
+
+            //between
+            renderRect(
+                renderState,
+                middleCoordX + width,
+                middleCoordY + height,
+                width / 2.f,
+                height / 2.f,
+                color);
+
+            //middle
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY,
+                width * 1.5f,
+                height / 2.f,
+                color);
+
+            //between
+            renderRect(
+                renderState,
+                middleCoordX - width,
+                middleCoordY - height,
+                width / 2.f,
+                height / 2.f,
+                color);
+            
+            //bottom
+            renderRect(
+                renderState,
+                middleCoordX,
+                middleCoordY - height * 2.f,
+                width * 1.5f,
+                height / 2.f,
+                color);
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 #pragma endregion
 
 #pragma region BitMap

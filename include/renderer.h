@@ -9,6 +9,7 @@
 
 #include "../include/macros.h"
 
+// TODO: Rename to renderScale
 GLOBALVAR const float scale = 0.01f;
 
 struct RenderState {
@@ -41,10 +42,19 @@ void renderRect(
     RenderState& renderState,
     int middleCoordX, 
     int middleCoordY, 
-    int width, 
-    int height, 
+    int halfWidth, 
+    int halfHeight, 
     UINT32 color
 );
+
+void renderNumberCharacter(
+    RenderState &renderState,
+    int number,
+    int middleCoordX,
+    int middleCoordY,
+    int width,
+    int height,
+    UINT32 color);
 
 void render(const RenderState& renderState, HDC deviceContext);
 #pragma endregion

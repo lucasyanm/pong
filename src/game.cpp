@@ -1,11 +1,21 @@
 #include "../include/game.h"
 
-GLOBALVAR Player playerRight {80.f};
-GLOBALVAR Player playerLeft {-80.f};
-GLOBALVAR Ball ball;
-
 const float arenaHalfSizeWidth = 85;
 const float arenaHalfSizeHeight = 45;
+
+//Player 1
+GLOBALVAR Player playerRight { 
+    80.f, 
+    10.f, 
+    arenaHalfSizeHeight - 10.f };
+//Player 2
+GLOBALVAR Player playerLeft {
+    -80.f, 
+    -10.f, 
+    arenaHalfSizeHeight - 10.f};
+
+GLOBALVAR Ball ball;
+
 
 void calculatePlayerPosition(
     Player& player, 
@@ -84,7 +94,7 @@ void simulateGame(
     calculatePlayerPosition(playerRight, deltaTimeInSeconds);
     calculatePlayerPosition(playerLeft, deltaTimeInSeconds);
 
-    #pragma region Calculate Ball Position
+    #pragma region Calculate Ball Pos
     {
         ball.positionY += ball.derivativePositionY * deltaTimeInSeconds;
         ball.positionX += ball.derivativePositionX * deltaTimeInSeconds;
@@ -117,22 +127,48 @@ void simulateGame(
         }
 
         //checking arena axis X collision
+
+        //right collision
         if(ball.positionX + ball.halfWidth > arenaHalfSizeWidth) {
             ball.positionX = 0.f;
             ball.positionY = 0.f;
             ball.derivativePositionX *= -1.f;
             ball.derivativePositionY = 0.f;
+
+            playerLeft.score.points++;
         }
+        //left collision
         else if (ball.positionX - ball.halfWidth < -arenaHalfSizeWidth) {
             ball.positionX = 0.f;
             ball.positionY = 0.f;
             ball.derivativePositionX *= -1.f;
             ball.derivativePositionY = 0.f;
+
+            playerRight.score.points++;
         }
 
         #pragma endregion
     }
     #pragma endregion
+
+    renderNumberCharacter(
+        renderState, 
+        playerLeft.score.points,
+        playerLeft.score.positionX, 
+        playerLeft.score.positionY, 
+        playerLeft.score.halfWidth * 2, 
+        playerLeft.score.halfHeight * 2, 
+        mainColor
+    );
+    renderNumberCharacter(
+        renderState, 
+        playerRight.score.points,
+        playerRight.score.positionX, 
+        playerRight.score.positionY, 
+        playerRight.score.halfWidth * 2, 
+        playerRight.score.halfHeight * 2, 
+        mainColor
+    );
 
     renderRect(
         renderState, 
