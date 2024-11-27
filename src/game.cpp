@@ -1,4 +1,5 @@
 #include "../include/game.h"
+#include <algorithm>
 
 const float arenaHalfSizeWidth = 85;
 const float arenaHalfSizeHeight = 45;
@@ -73,6 +74,7 @@ void simulateGame(
         secColor);
 
     #pragma region Movment
+    #if 0 //HACK: Need to add a way to select player or AI
     playerRight.derivativeDerivativePositionY = 0.f;
     if (isHold(Button::DOWN))
     {
@@ -81,6 +83,14 @@ void simulateGame(
     if (isHold(Button::UP)) {
         playerRight.derivativeDerivativePositionY += 2000;
     };
+    #else
+    playerRight.derivativeDerivativePositionY = std::max(
+        -1300.f,
+        std::min(
+            1300.f, 
+            (ball.positionY - playerRight.positionY) * 100.f)
+        );
+    #endif
 
     playerLeft.derivativeDerivativePositionY = 0.f;
     if (isHold(Button::S))
