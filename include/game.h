@@ -19,15 +19,11 @@ enum GameMode
     LOCAL_MULTIPLAYER
 };
 
-GLOBALVAR GameMode gameMode = SINGLEPLAYER;
-
 enum CurrentScreen
 {
     MAIN_MENU,
     GAME
 };
-
-GLOBALVAR CurrentScreen currentScreen = MAIN_MENU;
 
 #pragma region Primary Objects
 struct Object {

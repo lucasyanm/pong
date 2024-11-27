@@ -4,6 +4,9 @@
 #pragma region Global Menu Var
 GLOBALVAR MenuButton singlePlayerButton (-15.f, 0.f, true);
 GLOBALVAR MenuButton localMultiplayerButton {15.f, 0.f};
+
+GLOBALVAR GameMode gameMode = SINGLEPLAYER;
+GLOBALVAR CurrentScreen currentScreen = MAIN_MENU;
 #pragma endregion
 
 #pragma region Global Game Var
