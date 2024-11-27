@@ -63,7 +63,8 @@
       "background": "#f54e4e"
     },
     "HACK": {
-      "icon": "tools"
+      "icon": "tools",
+      "background": "#e4f54e"
     },
     "FIXME": {
       "icon": "flame"

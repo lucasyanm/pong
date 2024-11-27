@@ -66,6 +66,7 @@ void calculateBallVelocityBasedOnPlayer(
 }
 
 // BUG: Delay to start player movement in 50% keyboard
+// BUG: Not capturing properly keyboard press only
 void simulateGame(
     const Input& input, 
     const float& deltaTimeInSeconds,
@@ -83,14 +84,15 @@ void simulateGame(
     switch (currentScreen)
     {
         case MAIN_MENU: {
-            if(isHold(Button::RIGHT)) {
+            if(isPressed(Button::RIGHT)) {
                 gameMode = LOCAL_MULTIPLAYER;
             }
-            else if(isHold(Button::LEFT)) {
+            else if(isPressed(Button::LEFT)) {
                 gameMode = SINGLEPLAYER;
             }
+            // HACK: Not recozing enter press only
             else if (isHold(Button::ENTER))
-            {
+            {  
                 currentScreen = GAME;
             }            
 
