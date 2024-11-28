@@ -41,29 +41,29 @@ void clearScreen(RenderState& renderState, UINT32 color);
 
 void renderRect(
     RenderState& renderState,
-    int middleCoordX, 
-    int middleCoordY, 
-    int halfWidth, 
-    int halfHeight, 
+    float middleCoordX, 
+    float middleCoordY, 
+    float halfWidth, 
+    float halfHeight, 
     UINT32 color
 );
 
 void renderNumberCharacter(
     RenderState &renderState,
     int number,
-    int middleCoordX,
-    int middleCoordY,
-    int width,
-    int height,
+    float middleCoordX,
+    float middleCoordY,
+    float width,
+    float height,
     UINT32 color);
 
 void renderLetterCharacter(
     RenderState &renderState,
     std::string text,
-    int positionX,
-    int positionY,
-    int halfWidth,
-    int halfHeight,
+    float initialPositionX,
+    float initialPositionY,
+    float halfWidth,
+    float halfHeight,
     UINT32 color);
 
 void render(const RenderState& renderState, HDC deviceContext);

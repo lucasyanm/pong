@@ -102,8 +102,8 @@ void simulateGame(
                 "Single Player", 
                 -arenaHalfSizeWidth, 
                 0, 
-                1.f, 
-                1.f, 
+                .5f, 
+                .5f, 
                 mainColor);      
 
             // renderRect(

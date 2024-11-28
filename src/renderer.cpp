@@ -60,19 +60,19 @@ void renderRectInPixels(
 
 void renderRect(
     RenderState& renderState,
-    int middleCoordX, 
-    int middleCoordY, 
-    int halfWidth, 
-    int halfHeight, 
+    float middleCoordX, 
+    float middleCoordY, 
+    float halfWidth, 
+    float halfHeight, 
     UINT32 color
 ) {
     // calculate aspect ratio
-    int greaterCommonDivisor = std::gcd(renderState.width, renderState.height);
-    int aspectWidth = greaterCommonDivisor ? renderState.width / greaterCommonDivisor : 0;
-    int aspectHeight = greaterCommonDivisor ? renderState.height / greaterCommonDivisor : 0;
+    float greaterCommonDivisor = std::gcd(renderState.width, renderState.height);
+    float aspectWidth = greaterCommonDivisor ? renderState.width / greaterCommonDivisor : 0;
+    float aspectHeight = greaterCommonDivisor ? renderState.height / greaterCommonDivisor : 0;
 
     // define multiplier
-    int multiplier = aspectHeight > aspectWidth ? renderState.width : renderState.height;
+    float multiplier = aspectHeight > aspectWidth ? renderState.width : renderState.height;
     
     // convert to percentage
     middleCoordX *= scale * multiplier;
@@ -84,10 +84,10 @@ void renderRect(
     middleCoordY += renderState.height / 2;
 
     // convert to pixel coord
-    int x0 = middleCoordX - halfWidth;
-    int y0 = middleCoordY - halfHeight;
-    int x1 = middleCoordX + halfWidth;
-    int y1 = middleCoordY + halfHeight;
+    float x0 = middleCoordX - halfWidth;
+    float y0 = middleCoordY - halfHeight;
+    float x1 = middleCoordX + halfWidth;
+    float y1 = middleCoordY + halfHeight;
 
     renderRectInPixels(renderState, x0, y0, x1, y1, color);
 }
@@ -107,10 +107,10 @@ void render(const RenderState& renderState, HDC deviceContext) {
 void renderNumberCharacter(
     RenderState& renderState, 
     int number,
-    int middleCoordX, 
-    int middleCoordY, 
-    int width, 
-    int height, 
+    float middleCoordX, 
+    float middleCoordY, 
+    float width, 
+    float height, 
     UINT32 color
 ) {
     bool alreadyDraw = false;
@@ -732,18 +732,18 @@ const std::string letters[28][7] = {
 void renderLetterCharacter(
     RenderState& renderState,
     std::string text,
-    int initialPositionX,
-    int initialPositionY,
-    int halfWidth,
-    int halfHeight,
+    float initialPositionX,
+    float initialPositionY,
+    float halfWidth,
+    float halfHeight,
     UINT32 color
 ) {
-    const int letterBetweenSpace = halfWidth * 4.f;
-    const int wordBetweenSpace = letterBetweenSpace * 2.f;
+    const float letterBetweenSpace = halfWidth * 4.f;
+    const float wordBetweenSpace = letterBetweenSpace * 2.f;
 
     for(char textCharacter : text) {
-        int positionX = initialPositionX;
-        int positionY = initialPositionY;
+        float positionX = initialPositionX;
+        float positionY = initialPositionY;
 
         if(textCharacter == ' ') {
             initialPositionX += wordBetweenSpace;
