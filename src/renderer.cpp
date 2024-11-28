@@ -474,6 +474,46 @@ void renderNumberCharacter(
     }
 }
 
+const std::string letters[7] = {
+    " 00 ",
+    "0  0",
+    "0  0",
+    "0000",
+    "0  0",
+    "0  0",
+    "0  0"
+};
+
+void renderLetterCharacter(
+    RenderState& renderState,
+    std::string text,
+    int initialPositionX,
+    int initialPositionY,
+    int halfWidth,
+    int halfHeight,
+    UINT32 color
+) {
+    int positionX = initialPositionX;
+    int positionY = initialPositionY;
+
+    for(const std::string& row : letters) {
+        for(char character : row) {
+            if(character == '0') {
+                renderRect(
+                    renderState,
+                    positionX,
+                    positionY,
+                    halfWidth,
+                    halfHeight,
+                    color);
+            }
+            positionX += halfWidth * 2.f;
+        }
+        positionY -= halfHeight * 2.f;
+        positionX = initialPositionX;
+    }
+};
+
 #pragma endregion
 
 #pragma region BitMap

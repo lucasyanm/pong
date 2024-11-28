@@ -5,8 +5,8 @@
 GLOBALVAR MenuButton singlePlayerButton (-15.f, 0.f, true);
 GLOBALVAR MenuButton localMultiplayerButton {15.f, 0.f};
 
-GLOBALVAR GameMode gameMode = SINGLEPLAYER;
-GLOBALVAR CurrentScreen currentScreen = MAIN_MENU;
+GLOBALVAR auto gameMode = GameMode::SINGLEPLAYER;
+GLOBALVAR auto currentScreen = CurrentScreen::MAIN_MENU;
 #pragma endregion
 
 #pragma region Global Game Var
@@ -94,7 +94,16 @@ void simulateGame(
             else if (isHold(Button::ENTER))
             {  
                 currentScreen = GAME;
-            }            
+            }    
+
+            renderLetterCharacter(
+                renderState, 
+                "Single Player", 
+                0, 
+                0, 
+                1.f, 
+                1.f, 
+                mainColor);      
 
             renderRect(
                 renderState, 

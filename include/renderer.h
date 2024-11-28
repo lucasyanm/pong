@@ -4,6 +4,7 @@
 #include <windef.h>
 #include <minwindef.h>
 #include <wingdi.h>
+#include <string>
 
 #include <tuple>
 
@@ -54,6 +55,15 @@ void renderNumberCharacter(
     int middleCoordY,
     int width,
     int height,
+    UINT32 color);
+
+void renderLetterCharacter(
+    RenderState &renderState,
+    std::string text,
+    int positionX,
+    int positionY,
+    int halfWidth,
+    int halfHeight,
     UINT32 color);
 
 void render(const RenderState& renderState, HDC deviceContext);
