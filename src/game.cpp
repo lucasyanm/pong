@@ -96,34 +96,35 @@ void simulateGame(
                 currentScreen = GAME;
             }    
 
+            // XXX: Debug
             renderLetterCharacter(
                 renderState, 
                 "Single Player", 
-                0, 
+                -arenaHalfSizeWidth, 
                 0, 
                 1.f, 
                 1.f, 
                 mainColor);      
 
-            renderRect(
-                renderState, 
-                singlePlayerButton.positionX, 
-                singlePlayerButton.positionY,
-                singlePlayerButton.halfWidth, 
-                singlePlayerButton.halfHeight, 
-                gameMode == SINGLEPLAYER 
-                    ?  mainColor
-                    : menuNotSelectedColor);
+            // renderRect(
+            //     renderState, 
+            //     singlePlayerButton.positionX, 
+            //     singlePlayerButton.positionY,
+            //     singlePlayerButton.halfWidth, 
+            //     singlePlayerButton.halfHeight, 
+            //     gameMode == SINGLEPLAYER 
+            //         ?  mainColor
+            //         : menuNotSelectedColor);
 
-            renderRect(
-                renderState, 
-                localMultiplayerButton.positionX, 
-                localMultiplayerButton.positionY,
-                localMultiplayerButton.halfWidth, 
-                localMultiplayerButton.halfHeight, 
-                gameMode == LOCAL_MULTIPLAYER 
-                    ? mainColor 
-                    : menuNotSelectedColor);
+            // renderRect(
+            //     renderState, 
+            //     localMultiplayerButton.positionX, 
+            //     localMultiplayerButton.positionY,
+            //     localMultiplayerButton.halfWidth, 
+            //     localMultiplayerButton.halfHeight, 
+            //     gameMode == LOCAL_MULTIPLAYER 
+            //         ? mainColor 
+            //         : menuNotSelectedColor);
         }
             break;
         case GAME: {

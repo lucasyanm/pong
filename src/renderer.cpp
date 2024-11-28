@@ -474,14 +474,259 @@ void renderNumberCharacter(
     }
 }
 
-const std::string letters[7] = {
-    " 00 ",
-    "0  0",
-    "0  0",
-    "0000",
-    "0  0",
-    "0  0",
-    "0  0"
+const std::string letters[28][7] = {
+    {
+        " 000",
+        "0   0",
+        "0   0",
+        "00000",
+        "0   0",
+        "0   0",
+        "0   0"
+    },
+    {
+        "0000",
+        "0   0",
+        "0   0",
+        "0000",
+        "0   0",
+        "0   0",
+        "0000"
+    },
+    {
+        " 0000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        " 0000"
+    },
+    {
+        "0000",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0000"
+    },
+    {
+        "00000",
+        "0",
+        "0",
+        "00000",
+        "0",
+        "0",
+        "00000"
+    },
+    {
+        "00000",
+        "0",
+        "0",
+        "00000",
+        "0",
+        "0",
+        "0",
+    },
+    {
+        " 0000",
+        "0",
+        "0",
+        "0 000",
+        "0   0",
+        "0   0",
+        " 000"
+    },
+    {
+        "0   0",
+        "0   0",
+        "0   0",
+        "00000",
+        "0   0",
+        "0   0",
+        "0   0",
+    },
+    {
+        "00000",
+        "  0",
+        "  0",
+        "  0",
+        "  0",
+        "  0",
+        "00000"
+    },
+    {
+        " 0000",
+        "    0",
+        "    0",
+        "    0",
+        "0   0",
+        "0   0",
+        " 000"
+    },
+    {
+        "0   0",
+        "0   0",
+        "0  0",
+        "000",
+        "0  0",
+        "0   0",
+        "0   0"
+    },
+    {
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "00000"
+    },
+    {
+        "00 00",
+        "0 0 0",
+        "0 0 0",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0"
+    },
+    {
+        "00  0",
+        "0 0 0",
+        "0 0 0",
+        "0 0 0",
+        "0 0 0",
+        "0 0 0",
+        "0  00"
+    },
+    {
+        " 000",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        " 000"
+    },
+    {
+        " 000",
+        "0   0",
+        "0   0",
+        "0000",
+        "0",
+        "0",
+        "0"
+    },
+    {
+        " 000",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0 0 0",
+        "0  0 ",
+        " 00 0"
+    },
+    {
+        "0000",
+        "0   0",
+        "0  0",
+        "000",
+        "0  0",
+        "0   0",
+        "0   0"
+    },
+    {
+        " 0000",
+        "0",
+        "0",
+        " 000",
+        "    0",
+        "    0",
+        "0000"
+    },
+    {
+        "00000",
+        "  0",
+        "  0",
+        "  0",
+        "  0",
+        "  0",
+        "  0"
+    },
+    {
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        " 000"
+    },
+    {
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        " 0 0",
+        "  0"
+    },
+    {
+        "0   0",
+        "0   0",
+        "0   0",
+        "0   0",
+        "0 0 0",
+        "0 0 0",
+        " 0 0"
+    },
+    {
+        "0   0",
+        "0   0",
+        " 0 0",
+        "  0",
+        " 0 0",
+        "0   0",
+        "0   0"
+    },
+    {
+        "0   0",
+        "0   0",
+        " 0 0",
+        "  0",
+        "  0",
+        "  0",
+        "  0"
+    },
+    {
+        "00000",
+        "    0",
+        "   0",
+        "  0",
+        " 0",
+        "0",
+        "00000"
+    },
+    {
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "0"
+    },
+    {
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        " ",
+        "0"
+    }
 };
 
 void renderLetterCharacter(
@@ -493,24 +738,47 @@ void renderLetterCharacter(
     int halfHeight,
     UINT32 color
 ) {
-    int positionX = initialPositionX;
-    int positionY = initialPositionY;
+    const int letterBetweenSpace = halfWidth * 4.f;
+    const int wordBetweenSpace = letterBetweenSpace * 2.f;
 
-    for(const std::string& row : letters) {
-        for(char character : row) {
-            if(character == '0') {
-                renderRect(
-                    renderState,
-                    positionX,
-                    positionY,
-                    halfWidth,
-                    halfHeight,
-                    color);
-            }
-            positionX += halfWidth * 2.f;
+    for(char textCharacter : text) {
+        int positionX = initialPositionX;
+        int positionY = initialPositionY;
+
+        if(textCharacter == ' ') {
+            initialPositionX += wordBetweenSpace;
         }
-        positionY -= halfHeight * 2.f;
-        positionX = initialPositionX;
+        else {
+            int characterIndex = toupper(textCharacter) - 'A';
+            
+            //draw letter
+            for(const std::string letterRow : letters[characterIndex]) {
+                positionX = initialPositionX;
+
+                int letterRowDotPosition = 0;
+                while(letterRowDotPosition < letterRow.length()) {
+                    if(letterRow[letterRowDotPosition] == '0') 
+                        renderRect(
+                            renderState,
+                            positionX,
+                            positionY,
+                            halfWidth,
+                            halfHeight,
+                            0xff0000);
+                        
+                    if(++letterRowDotPosition < letterRow.length())
+                        positionX += halfWidth * 2.f;
+                }
+                // guarantees that all the letter "rows" have the same width
+                if(--letterRowDotPosition < 4)
+                    positionX += halfWidth * 2.f * (4 - letterRowDotPosition);
+                    
+                positionY -= halfHeight * 2.f;
+            }
+            // set the initial x position as the x position of the next letter
+            initialPositionX = positionX + letterBetweenSpace;
+        }
+        
     }
 };
 
