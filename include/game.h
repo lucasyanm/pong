@@ -61,14 +61,15 @@ struct Score : Object {
 struct Player : Object, YPhysics {
     Player(
         float positionX,
+        float halfWidth,
+        float halfHeight,
         float scorePositionX,
         float scorePositionY) 
         : Object{
-            .positionX = positionX },
+            .positionX = positionX,
+            .halfWidth = halfWidth,
+            .halfHeight = halfHeight,},
         score(scorePositionX, scorePositionY) {};
-
-    static constexpr float halfWidth = 2.5f;
-    static constexpr float halfHeight = 12.f;
 
     Score score;
 };

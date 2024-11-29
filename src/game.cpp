@@ -13,11 +13,15 @@ GLOBALVAR auto currentScreen = CurrentScreen::MAIN_MENU;
 //Player 1
 GLOBALVAR Player playerRight { 
     80.f, 
+    2.5f,
+    12.f,
     10.f, 
     arenaHalfSizeHeight - 10.f };
 //Player 2
 GLOBALVAR Player playerLeft {
-    -80.f, 
+    -80.f,
+    2.5f,
+    12.f,
     -10.f, 
     arenaHalfSizeHeight - 10.f};
 
