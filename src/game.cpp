@@ -2,8 +2,8 @@
 #include <algorithm>
 
 #pragma region Global Menu Var
-GLOBALVAR MenuButton singlePlayerButton (-80.f, -10.f, "SinglePlayer", true);
-GLOBALVAR MenuButton localMultiplayerButton {10.f, -10.f, "Local Multiplayer"};
+GLOBALVAR MenuButton singlePlayerButton (-80.f, -5.f, "SinglePlayer", true);
+GLOBALVAR MenuButton localMultiplayerButton {10.f, -5.f, "Local Multiplayer"};
 
 GLOBALVAR auto gameMode = GameMode::SINGLEPLAYER;
 GLOBALVAR auto currentScreen = CurrentScreen::MAIN_MENU;
@@ -94,9 +94,17 @@ void simulateGame(
             else if (isHold(Button::ENTER))
             {  
                 currentScreen = GAME;
-            }    
+            }
 
-            // XXX: Debug
+            renderLetterCharacter(
+                renderState,
+                "CLASSIC PONG GAME",
+                -55.f,
+                30.f,
+                .5f,
+                .5f,
+                mainColor);
+
             renderLetterCharacter(
                 renderState, 
                 singlePlayerButton.text, 
