@@ -25,7 +25,10 @@ GLOBALVAR Player playerLeft {
     -10.f, 
     arenaHalfSizeHeight - 10.f};
 
-GLOBALVAR Ball ball;
+GLOBALVAR Ball ball (
+    130.f,
+    0.f
+);
 #pragma endregion
 
 

@@ -75,10 +75,12 @@ struct Player : Object, YPhysics {
 };
 
 struct Ball : Object, XPhysics, YPhysics {
-    Ball() 
+    Ball(
+        float derivativePositionX, 
+        float derivativeDerivativePositionX) 
         : XPhysics{
-            .derivativePositionX = 130.f,
-            .derivativeDerivativePositionX = 0.f} {};
+            .derivativePositionX = derivativePositionX,
+            .derivativeDerivativePositionX = derivativeDerivativePositionX} {};
 };
 
 struct MenuButton : Object {
