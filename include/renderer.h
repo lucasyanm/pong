@@ -10,7 +10,6 @@
 
 #include "../include/macros.h"
 
-// TODO: Change static global const case name to snake case with uppercase
 GLOBALVAR const float RENDER_SCALE = 0.01f;
 
 struct RenderState {

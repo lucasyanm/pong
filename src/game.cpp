@@ -91,13 +91,13 @@ void simulateGame(
     RenderState& renderState
 ) {
     //background
-    clearScreen(renderState, mainColor);
+    clearScreen(renderState, MAIN_COLOR);
     renderRect(
         renderState, 
         0, 0, 
         arenaHalfSizeWidth, 
         arenaHalfSizeHeight, 
-        secColor);
+        SECONDARY_COLOR);
 
     switch (currentScreen)
     {
@@ -121,7 +121,7 @@ void simulateGame(
                 30.f,
                 .5f,
                 .5f,
-                mainColor);
+                MAIN_COLOR);
 
             renderLetterCharacter(
                 renderState, 
@@ -131,8 +131,8 @@ void simulateGame(
                 singlePlayerButton.halfWidth, 
                 singlePlayerButton.halfHeight, 
                 gameMode == GameMode::SINGLEPLAYER 
-                     ? mainColor
-                     : menuNotSelectedColor);   
+                     ? MAIN_COLOR
+                     : MENU_NOT_SELECTED_COLOR);   
             
             renderLetterCharacter(
                 renderState, 
@@ -142,8 +142,8 @@ void simulateGame(
                 localMultiplayerButton.halfWidth, 
                 localMultiplayerButton.halfHeight, 
                 gameMode == GameMode::LOCAL_MULTIPLAYER
-                     ? mainColor
-                     : menuNotSelectedColor);   
+                     ? MAIN_COLOR
+                     : MENU_NOT_SELECTED_COLOR);   
         }
             break;
         case GAME: {
@@ -250,7 +250,7 @@ void simulateGame(
                 playerLeft.score.positionY, 
                 playerLeft.score.halfWidth * 2, 
                 playerLeft.score.halfHeight * 2, 
-                mainColor
+                MAIN_COLOR
             );
             renderNumberCharacter(
                 renderState, 
@@ -259,7 +259,7 @@ void simulateGame(
                 playerRight.score.positionY, 
                 playerRight.score.halfWidth * 2, 
                 playerRight.score.halfHeight * 2, 
-                mainColor
+                MAIN_COLOR
             );
 
             renderRect(
@@ -268,21 +268,21 @@ void simulateGame(
                 ball.positionY, 
                 ball.halfWidth, 
                 ball.halfHeight, 
-                mainColor);
+                MAIN_COLOR);
             renderRect(
                 renderState, 
                 playerLeft.positionX, 
                 playerLeft.positionY, 
                 playerLeft.halfWidth, 
                 playerLeft.halfHeight, 
-                mainColor);
+                MAIN_COLOR);
             renderRect(
                 renderState, 
                 playerRight.positionX, 
                 playerRight.positionY, 
                 playerRight.halfWidth, 
                 playerLeft.halfHeight, 
-                mainColor);
+                MAIN_COLOR);
             #pragma endregion
         }
             break;

@@ -6,13 +6,11 @@
 #include "renderer.h"
 
 //Gray
-GLOBALVAR const UINT mainColor = 0xebebeb;
+GLOBALVAR const UINT MAIN_COLOR = 0xebebeb;
 //Black
-GLOBALVAR const UINT secColor = 0x1c1c1c;
+GLOBALVAR const UINT SECONDARY_COLOR = 0x1c1c1c;
 //Dark Gray
-GLOBALVAR const UINT menuNotSelectedColor = 0x2c2c2c;
-//units (pixels) per second
-GLOBALVAR const float playerSpeed = 100.f;
+GLOBALVAR const UINT MENU_NOT_SELECTED_COLOR = 0x2c2c2c;
 
 const float arenaHalfSizeWidth = 85;
 const float arenaHalfSizeHeight = 45;
