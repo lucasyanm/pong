@@ -1,5 +1,9 @@
 # Pong Game
 
+<p align="center">
+  <img src="./assets/pong.gif" alt="Pong Gameplay">
+</p>
+
 This project is a recreation of the classic 1970s arcade Pong game, developed in C++. It uses the Windows API and is built and debugged using `make` and Visual Studio Code.
 
 ## Table of Contents
