@@ -1,8 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-//TODO: Change name to KeyboardButton
-struct Button {
+struct KeyboardButton {
     bool pressed = false;
     bool changed = false;
 
@@ -21,7 +20,7 @@ struct Button {
 };
 
 struct Input {
-    Button buttons[Button::BUTTONS_COUNT];
+    KeyboardButton buttons[KeyboardButton::BUTTONS_COUNT];
 };
 
 void resetInput(Input& input);

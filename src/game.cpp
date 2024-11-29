@@ -102,14 +102,14 @@ void simulateGame(
     switch (currentScreen)
     {
         case MAIN_MENU: {
-            if(isPressed(Button::RIGHT)) {
+            if(isPressed(KeyboardButton::RIGHT)) {
                 gameMode = LOCAL_MULTIPLAYER;
             }
-            else if(isPressed(Button::LEFT)) {
+            else if(isPressed(KeyboardButton::LEFT)) {
                 gameMode = SINGLEPLAYER;
             }
             // HACK: Not recozing enter press only
-            else if (isHold(Button::ENTER))
+            else if (isHold(KeyboardButton::ENTER))
             {  
                 currentScreen = GAME;
             }
@@ -160,11 +160,11 @@ void simulateGame(
                     break;
                 case LOCAL_MULTIPLAYER:
                     playerRight.derivativeDerivativePositionY = 0.f;
-                    if (isHold(Button::DOWN))
+                    if (isHold(KeyboardButton::DOWN))
                     {
                         playerRight.derivativeDerivativePositionY -= 2000;
                     };
-                    if (isHold(Button::UP)) {
+                    if (isHold(KeyboardButton::UP)) {
                         playerRight.derivativeDerivativePositionY += 2000;
                     };
                     break;
@@ -173,11 +173,11 @@ void simulateGame(
             }
 
             playerLeft.derivativeDerivativePositionY = 0.f;
-            if (isHold(Button::S))
+            if (isHold(KeyboardButton::S))
             {
                 playerLeft.derivativeDerivativePositionY -= 2000;
             };
-            if (isHold(Button::W)) {
+            if (isHold(KeyboardButton::W)) {
                 playerLeft.derivativeDerivativePositionY += 2000;
             };
 
