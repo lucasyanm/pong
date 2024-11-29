@@ -34,7 +34,6 @@ struct Object {
     float positionX = 0.f;
     float positionY = 0.f;
 
-    // TODO: Change to var instead of const
     float halfWidth = 1.f;
     float halfHeight = 1.f;
 };
