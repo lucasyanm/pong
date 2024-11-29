@@ -87,16 +87,17 @@ struct MenuButton : Object {
     MenuButton(
         float positionX, 
         float positionY, 
+        float letterPixelHalfWidth = 0,
+        float letterPixelHalfHeight = 0,
         std::string text = "",
         bool selected = false) 
         : Object{
             .positionX = positionX, 
-            .positionY = positionY},
+            .positionY = positionY,
+            .halfWidth = letterPixelHalfWidth,
+            .halfHeight = letterPixelHalfHeight},
         text(text),
         selected(selected) {};
-
-    static constexpr float halfWidth = .3f;
-    static constexpr float halfHeight = .3f;
 
     bool selected;
     std::string text;

@@ -2,8 +2,19 @@
 #include <algorithm>
 
 #pragma region Global Menu Var
-GLOBALVAR MenuButton singlePlayerButton (-80.f, -5.f, "SinglePlayer", true);
-GLOBALVAR MenuButton localMultiplayerButton {10.f, -5.f, "Local Multiplayer"};
+GLOBALVAR MenuButton singlePlayerButton (
+    -80.f, 
+    -5.f, 
+    .3f,
+    .3f,
+    "SinglePlayer", 
+    true);
+GLOBALVAR MenuButton localMultiplayerButton {
+    10.f, 
+    -5.f, 
+    .3f,
+    .3f,
+    "Local Multiplayer"};
 
 GLOBALVAR auto gameMode = GameMode::SINGLEPLAYER;
 GLOBALVAR auto currentScreen = CurrentScreen::MAIN_MENU;
