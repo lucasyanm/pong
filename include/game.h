@@ -35,8 +35,8 @@ struct Object {
     float positionY = 0.f;
 
     // TODO: Change to var instead of const
-    static constexpr float halfWidth = 1.f;
-    static constexpr float halfHeight = 1.f;
+    float halfWidth = 1.f;
+    float halfHeight = 1.f;
 };
 struct YPhysics {
     float derivativePositionY = 0.f; //Velocity
@@ -56,9 +56,6 @@ struct Score : Object {
             .positionY = positionY} {};
 
     int points = 0;
-
-    static constexpr float halfWidth = 1.f;
-    static constexpr float halfHeight = 1.f;
 };
 
 struct Player : Object, YPhysics {
