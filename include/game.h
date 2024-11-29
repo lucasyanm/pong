@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <string>
 #include "input.h"
 #include "renderer.h"
 
@@ -8,7 +9,7 @@
 GLOBALVAR const UINT mainColor = 0xebebeb;
 //Black
 GLOBALVAR const UINT secColor = 0x1c1c1c;
-//Menu selected button
+//Dark Gray
 GLOBALVAR const UINT menuNotSelectedColor = 0x2c2c2c;
 //units (pixels) per second
 GLOBALVAR const float playerSpeed = 100.f;
@@ -86,16 +87,19 @@ struct MenuButton : Object {
     MenuButton(
         float positionX, 
         float positionY, 
+        std::string text = "",
         bool selected = false) 
         : Object{
             .positionX = positionX, 
             .positionY = positionY},
+        text(text),
         selected(selected) {};
 
-    static constexpr float halfWidth = 10.f;
-    static constexpr float halfHeight = 5.f;
+    static constexpr float halfWidth = .3f;
+    static constexpr float halfHeight = .3f;
 
     bool selected;
+    std::string text;
 };
 
 #pragma endregion

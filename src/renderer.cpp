@@ -764,14 +764,14 @@ void renderLetterCharacter(
                             positionY,
                             halfWidth,
                             halfHeight,
-                            0xff0000);
+                            color);
                         
                     if(++letterRowDotPosition < letterRow.length())
                         positionX += halfWidth * 2.f;
                 }
                 // guarantees that all the letter "rows" have the same width
-                if(--letterRowDotPosition < 4)
-                    positionX += halfWidth * 2.f * (4 - letterRowDotPosition);
+                if(--letterRowDotPosition < letterWidth)
+                    positionX += halfWidth * 2.f * (letterWidth - letterRowDotPosition);
                     
                 positionY -= halfHeight * 2.f;
             }

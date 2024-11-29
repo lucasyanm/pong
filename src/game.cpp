@@ -2,8 +2,8 @@
 #include <algorithm>
 
 #pragma region Global Menu Var
-GLOBALVAR MenuButton singlePlayerButton (-15.f, 0.f, true);
-GLOBALVAR MenuButton localMultiplayerButton {15.f, 0.f};
+GLOBALVAR MenuButton singlePlayerButton (-80.f, -10.f, "SinglePlayer", true);
+GLOBALVAR MenuButton localMultiplayerButton {10.f, -10.f, "Local Multiplayer"};
 
 GLOBALVAR auto gameMode = GameMode::SINGLEPLAYER;
 GLOBALVAR auto currentScreen = CurrentScreen::MAIN_MENU;
@@ -99,32 +99,25 @@ void simulateGame(
             // XXX: Debug
             renderLetterCharacter(
                 renderState, 
-                "Single Player", 
-                -arenaHalfSizeWidth, 
-                0, 
-                .5f, 
-                .5f, 
-                mainColor);      
-
-            // renderRect(
-            //     renderState, 
-            //     singlePlayerButton.positionX, 
-            //     singlePlayerButton.positionY,
-            //     singlePlayerButton.halfWidth, 
-            //     singlePlayerButton.halfHeight, 
-            //     gameMode == SINGLEPLAYER 
-            //         ?  mainColor
-            //         : menuNotSelectedColor);
-
-            // renderRect(
-            //     renderState, 
-            //     localMultiplayerButton.positionX, 
-            //     localMultiplayerButton.positionY,
-            //     localMultiplayerButton.halfWidth, 
-            //     localMultiplayerButton.halfHeight, 
-            //     gameMode == LOCAL_MULTIPLAYER 
-            //         ? mainColor 
-            //         : menuNotSelectedColor);
+                singlePlayerButton.text, 
+                singlePlayerButton.positionX,
+                singlePlayerButton.positionY, 
+                singlePlayerButton.halfWidth, 
+                singlePlayerButton.halfHeight, 
+                gameMode == GameMode::SINGLEPLAYER 
+                     ? mainColor
+                     : menuNotSelectedColor);   
+            
+            renderLetterCharacter(
+                renderState, 
+                localMultiplayerButton.text, 
+                localMultiplayerButton.positionX, 
+                localMultiplayerButton.positionY, 
+                localMultiplayerButton.halfWidth, 
+                localMultiplayerButton.halfHeight, 
+                gameMode == GameMode::LOCAL_MULTIPLAYER
+                     ? mainColor
+                     : menuNotSelectedColor);   
         }
             break;
         case GAME: {

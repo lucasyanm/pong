@@ -37,6 +37,8 @@ void setBitMapInfo(
 #pragma endregion
 
 #pragma region Screen
+GLOBALVAR int const letterWidth = 5;
+
 void clearScreen(RenderState& renderState, UINT32 color);
 
 void renderRect(
