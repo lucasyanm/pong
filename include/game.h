@@ -6,13 +6,11 @@
 #include "renderer.h"
 
 //Gray
-GLOBALVAR const UINT mainColor = 0xebebeb;
+GLOBALVAR const UINT MAIN_COLOR = 0xebebeb;
 //Black
-GLOBALVAR const UINT secColor = 0x1c1c1c;
+GLOBALVAR const UINT SECONDARY_COLOR = 0x1c1c1c;
 //Dark Gray
-GLOBALVAR const UINT menuNotSelectedColor = 0x2c2c2c;
-//units (pixels) per second
-GLOBALVAR const float playerSpeed = 100.f;
+GLOBALVAR const UINT MENU_NOT_SELECTED_COLOR = 0x2c2c2c;
 
 const float arenaHalfSizeWidth = 85;
 const float arenaHalfSizeHeight = 45;
@@ -34,9 +32,8 @@ struct Object {
     float positionX = 0.f;
     float positionY = 0.f;
 
-    // TODO: Change to var instead of const
-    static constexpr float halfWidth = 1.f;
-    static constexpr float halfHeight = 1.f;
+    float halfWidth = 1.f;
+    float halfHeight = 1.f;
 };
 struct YPhysics {
     float derivativePositionY = 0.f; //Velocity
@@ -56,47 +53,48 @@ struct Score : Object {
             .positionY = positionY} {};
 
     int points = 0;
-
-    static constexpr float halfWidth = 1.f;
-    static constexpr float halfHeight = 1.f;
 };
 
 struct Player : Object, YPhysics {
     Player(
         float positionX,
+        float halfWidth,
+        float halfHeight,
         float scorePositionX,
         float scorePositionY) 
         : Object{
-            .positionX = positionX },
+            .positionX = positionX,
+            .halfWidth = halfWidth,
+            .halfHeight = halfHeight,},
         score(scorePositionX, scorePositionY) {};
-
-    static constexpr float halfWidth = 2.5f;
-    static constexpr float halfHeight = 12.f;
 
     Score score;
 };
 
 struct Ball : Object, XPhysics, YPhysics {
-    Ball() 
+    Ball(
+        float derivativePositionX, 
+        float derivativeDerivativePositionX) 
         : XPhysics{
-            .derivativePositionX = 130.f,
-            .derivativeDerivativePositionX = 0.f} {};
+            .derivativePositionX = derivativePositionX,
+            .derivativeDerivativePositionX = derivativeDerivativePositionX} {};
 };
 
 struct MenuButton : Object {
     MenuButton(
         float positionX, 
         float positionY, 
+        float letterPixelHalfWidth = 0,
+        float letterPixelHalfHeight = 0,
         std::string text = "",
         bool selected = false) 
         : Object{
             .positionX = positionX, 
-            .positionY = positionY},
+            .positionY = positionY,
+            .halfWidth = letterPixelHalfWidth,
+            .halfHeight = letterPixelHalfHeight},
         text(text),
         selected(selected) {};
-
-    static constexpr float halfWidth = .3f;
-    static constexpr float halfHeight = .3f;
 
     bool selected;
     std::string text;

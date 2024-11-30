@@ -10,8 +10,7 @@
 
 #include "../include/macros.h"
 
-// TODO: Rename to renderScale
-GLOBALVAR const float scale = 0.01f;
+GLOBALVAR const float RENDER_SCALE = 0.01f;
 
 struct RenderState {
     LPVOID memory; //LPVOID same as void*

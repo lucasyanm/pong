@@ -2,8 +2,19 @@
 #include <algorithm>
 
 #pragma region Global Menu Var
-GLOBALVAR MenuButton singlePlayerButton (-80.f, -5.f, "SinglePlayer", true);
-GLOBALVAR MenuButton localMultiplayerButton {10.f, -5.f, "Local Multiplayer"};
+GLOBALVAR MenuButton singlePlayerButton (
+    -80.f, 
+    -5.f, 
+    .3f,
+    .3f,
+    "SinglePlayer", 
+    true);
+GLOBALVAR MenuButton localMultiplayerButton {
+    10.f, 
+    -5.f, 
+    .3f,
+    .3f,
+    "Local Multiplayer"};
 
 GLOBALVAR auto gameMode = GameMode::SINGLEPLAYER;
 GLOBALVAR auto currentScreen = CurrentScreen::MAIN_MENU;
@@ -13,15 +24,22 @@ GLOBALVAR auto currentScreen = CurrentScreen::MAIN_MENU;
 //Player 1
 GLOBALVAR Player playerRight { 
     80.f, 
+    2.5f,
+    12.f,
     10.f, 
     arenaHalfSizeHeight - 10.f };
 //Player 2
 GLOBALVAR Player playerLeft {
-    -80.f, 
+    -80.f,
+    2.5f,
+    12.f,
     -10.f, 
     arenaHalfSizeHeight - 10.f};
 
-GLOBALVAR Ball ball;
+GLOBALVAR Ball ball (
+    130.f,
+    0.f
+);
 #pragma endregion
 
 
@@ -65,33 +83,30 @@ void calculateBallVelocityBasedOnPlayer(
         + player.derivativePositionY * .75f;
 }
 
-// BUG: Delay to start player movement in 50% keyboard
-// BUG: Not capturing properly keyboard press only
 void simulateGame(
     const Input& input, 
     const float& deltaTimeInSeconds,
     RenderState& renderState
 ) {
     //background
-    clearScreen(renderState, mainColor);
+    clearScreen(renderState, MAIN_COLOR);
     renderRect(
         renderState, 
         0, 0, 
         arenaHalfSizeWidth, 
         arenaHalfSizeHeight, 
-        secColor);
+        SECONDARY_COLOR);
 
     switch (currentScreen)
     {
         case MAIN_MENU: {
-            if(isPressed(Button::RIGHT)) {
+            if(isPressed(KeyboardButton::RIGHT)) {
                 gameMode = LOCAL_MULTIPLAYER;
             }
-            else if(isPressed(Button::LEFT)) {
+            else if(isPressed(KeyboardButton::LEFT)) {
                 gameMode = SINGLEPLAYER;
             }
-            // HACK: Not recozing enter press only
-            else if (isHold(Button::ENTER))
+            else if (isPressed(KeyboardButton::ENTER))
             {  
                 currentScreen = GAME;
             }
@@ -103,7 +118,7 @@ void simulateGame(
                 30.f,
                 .5f,
                 .5f,
-                mainColor);
+                MAIN_COLOR);
 
             renderLetterCharacter(
                 renderState, 
@@ -113,8 +128,8 @@ void simulateGame(
                 singlePlayerButton.halfWidth, 
                 singlePlayerButton.halfHeight, 
                 gameMode == GameMode::SINGLEPLAYER 
-                     ? mainColor
-                     : menuNotSelectedColor);   
+                     ? MAIN_COLOR
+                     : MENU_NOT_SELECTED_COLOR);   
             
             renderLetterCharacter(
                 renderState, 
@@ -124,8 +139,8 @@ void simulateGame(
                 localMultiplayerButton.halfWidth, 
                 localMultiplayerButton.halfHeight, 
                 gameMode == GameMode::LOCAL_MULTIPLAYER
-                     ? mainColor
-                     : menuNotSelectedColor);   
+                     ? MAIN_COLOR
+                     : MENU_NOT_SELECTED_COLOR);   
         }
             break;
         case GAME: {
@@ -142,11 +157,11 @@ void simulateGame(
                     break;
                 case LOCAL_MULTIPLAYER:
                     playerRight.derivativeDerivativePositionY = 0.f;
-                    if (isHold(Button::DOWN))
+                    if (isHold(KeyboardButton::DOWN))
                     {
                         playerRight.derivativeDerivativePositionY -= 2000;
                     };
-                    if (isHold(Button::UP)) {
+                    if (isHold(KeyboardButton::UP)) {
                         playerRight.derivativeDerivativePositionY += 2000;
                     };
                     break;
@@ -155,11 +170,12 @@ void simulateGame(
             }
 
             playerLeft.derivativeDerivativePositionY = 0.f;
-            if (isHold(Button::S))
+            if (isHold(KeyboardButton::S))
             {
                 playerLeft.derivativeDerivativePositionY -= 2000;
             };
-            if (isHold(Button::W)) {
+
+            if (isHold(KeyboardButton::W)) {
                 playerLeft.derivativeDerivativePositionY += 2000;
             };
 
@@ -232,7 +248,7 @@ void simulateGame(
                 playerLeft.score.positionY, 
                 playerLeft.score.halfWidth * 2, 
                 playerLeft.score.halfHeight * 2, 
-                mainColor
+                MAIN_COLOR
             );
             renderNumberCharacter(
                 renderState, 
@@ -241,7 +257,7 @@ void simulateGame(
                 playerRight.score.positionY, 
                 playerRight.score.halfWidth * 2, 
                 playerRight.score.halfHeight * 2, 
-                mainColor
+                MAIN_COLOR
             );
 
             renderRect(
@@ -250,21 +266,21 @@ void simulateGame(
                 ball.positionY, 
                 ball.halfWidth, 
                 ball.halfHeight, 
-                mainColor);
+                MAIN_COLOR);
             renderRect(
                 renderState, 
                 playerLeft.positionX, 
                 playerLeft.positionY, 
                 playerLeft.halfWidth, 
                 playerLeft.halfHeight, 
-                mainColor);
+                MAIN_COLOR);
             renderRect(
                 renderState, 
                 playerRight.positionX, 
                 playerRight.positionY, 
                 playerRight.halfWidth, 
                 playerLeft.halfHeight, 
-                mainColor);
+                MAIN_COLOR);
             #pragma endregion
         }
             break;

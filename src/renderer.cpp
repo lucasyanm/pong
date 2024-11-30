@@ -75,10 +75,10 @@ void renderRect(
     float multiplier = aspectHeight > aspectWidth ? renderState.width : renderState.height;
     
     // convert to percentage
-    middleCoordX *= scale * multiplier;
-    middleCoordY *= scale * multiplier;
-    halfWidth *= scale * multiplier;
-    halfHeight *= scale * multiplier;
+    middleCoordX *= RENDER_SCALE * multiplier;
+    middleCoordY *= RENDER_SCALE * multiplier;
+    halfWidth *= RENDER_SCALE * multiplier;
+    halfHeight *= RENDER_SCALE * multiplier;
 
     middleCoordX += renderState.width / 2;
     middleCoordY += renderState.height / 2;

@@ -72,6 +72,8 @@ int WINAPI wWinMain(
         // Render
         render(renderState, deviceContext);
 
+        resetInput(input);
+
         // Calculate delta time in seconds
         LARGE_INTEGER frameEndTime;
         QueryPerformanceCounter(&frameEndTime);
@@ -87,8 +89,6 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 {
     LRESULT result = 0;
     int bufferSize;
-
-    resetInput(input);
 
     switch (uMsg) {
         case WM_CLOSE:
@@ -125,13 +125,13 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             bool pressed = HIWORD(lParam) & KF_UP ? false : true;
 
             switch (vkCode) {
-                processButton(Button::UP, VK_UP, pressed);
-                processButton(Button::DOWN, VK_DOWN, pressed);
-                processButton(Button::W, 'W', pressed);
-                processButton(Button::S, 'S', pressed);
-                processButton(Button::LEFT, VK_LEFT, pressed);
-                processButton(Button::RIGHT, VK_RIGHT, pressed);
-                processButton(Button::ENTER, VK_RETURN, pressed);
+                processButton(KeyboardButton::UP, VK_UP, pressed);
+                processButton(KeyboardButton::DOWN, VK_DOWN, pressed);
+                processButton(KeyboardButton::W, 'W', pressed);
+                processButton(KeyboardButton::S, 'S', pressed);
+                processButton(KeyboardButton::LEFT, VK_LEFT, pressed);
+                processButton(KeyboardButton::RIGHT, VK_RIGHT, pressed);
+                processButton(KeyboardButton::ENTER, VK_RETURN, pressed);
             }
         }
             break;
