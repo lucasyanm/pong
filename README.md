@@ -59,7 +59,7 @@ There are no secrets. Just run the game, select singleplayer or local multiplay,
 
 ## Notes
 
-It still needs some minor polish, but you can play the game without any issues.
+It still needs some minor polish and some other features can be added, but you can play the game without any issues.
 
 ## License
 
