@@ -72,6 +72,8 @@ int WINAPI wWinMain(
         // Render
         render(renderState, deviceContext);
 
+        resetInput(input);
+
         // Calculate delta time in seconds
         LARGE_INTEGER frameEndTime;
         QueryPerformanceCounter(&frameEndTime);
@@ -87,8 +89,6 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 {
     LRESULT result = 0;
     int bufferSize;
-
-    resetInput(input);
 
     switch (uMsg) {
         case WM_CLOSE:

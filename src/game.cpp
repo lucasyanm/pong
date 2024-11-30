@@ -83,8 +83,6 @@ void calculateBallVelocityBasedOnPlayer(
         + player.derivativePositionY * .75f;
 }
 
-// BUG: Delay to start player movement in 50% keyboard
-// BUG: Not capturing properly keyboard press only
 void simulateGame(
     const Input& input, 
     const float& deltaTimeInSeconds,
@@ -108,8 +106,7 @@ void simulateGame(
             else if(isPressed(KeyboardButton::LEFT)) {
                 gameMode = SINGLEPLAYER;
             }
-            // HACK: Not recozing enter press only
-            else if (isHold(KeyboardButton::ENTER))
+            else if (isPressed(KeyboardButton::ENTER))
             {  
                 currentScreen = GAME;
             }
@@ -177,6 +174,7 @@ void simulateGame(
             {
                 playerLeft.derivativeDerivativePositionY -= 2000;
             };
+
             if (isHold(KeyboardButton::W)) {
                 playerLeft.derivativeDerivativePositionY += 2000;
             };
