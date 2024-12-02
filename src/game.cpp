@@ -16,8 +16,8 @@ GLOBALVAR MenuButton localMultiplayerButton {
     .3f,
     "Local Multiplayer"};
 
-GLOBALVAR auto gameMode = GameMode::SINGLEPLAYER;
-GLOBALVAR auto currentScreen = CurrentScreen::MAIN_MENU;
+GLOBALVAR auto gameMode = GameMode::Singleplayer;
+GLOBALVAR auto currentScreen = CurrentScreen::MainMenu;
 #pragma endregion
 
 #pragma region Global Game Var
@@ -89,26 +89,26 @@ void simulateGame(
     RenderState& renderState
 ) {
     //background
-    clearScreen(renderState, MAIN_COLOR);
+    clearScreen(renderState, mainColor);
     renderRect(
         renderState, 
         0, 0, 
         arenaHalfSizeWidth, 
         arenaHalfSizeHeight, 
-        SECONDARY_COLOR);
+        secondaryColor);
 
     switch (currentScreen)
     {
-        case MAIN_MENU: {
+        case MainMenu: {
             if(isPressed(KeyboardButton::RIGHT)) {
-                gameMode = LOCAL_MULTIPLAYER;
+                gameMode = LocalMultiplayer;
             }
             else if(isPressed(KeyboardButton::LEFT)) {
-                gameMode = SINGLEPLAYER;
+                gameMode = Singleplayer;
             }
             else if (isPressed(KeyboardButton::ENTER))
             {  
-                currentScreen = GAME;
+                currentScreen = Game;
             }
 
             renderLetterCharacter(
@@ -118,7 +118,7 @@ void simulateGame(
                 30.f,
                 .5f,
                 .5f,
-                MAIN_COLOR);
+                mainColor);
 
             renderLetterCharacter(
                 renderState, 
@@ -127,9 +127,9 @@ void simulateGame(
                 singlePlayerButton.positionY, 
                 singlePlayerButton.halfWidth, 
                 singlePlayerButton.halfHeight, 
-                gameMode == GameMode::SINGLEPLAYER 
-                     ? MAIN_COLOR
-                     : MENU_NOT_SELECTED_COLOR);   
+                gameMode == GameMode::Singleplayer 
+                     ? mainColor
+                     : menuNotSelectedColor);   
             
             renderLetterCharacter(
                 renderState, 
@@ -138,16 +138,16 @@ void simulateGame(
                 localMultiplayerButton.positionY, 
                 localMultiplayerButton.halfWidth, 
                 localMultiplayerButton.halfHeight, 
-                gameMode == GameMode::LOCAL_MULTIPLAYER
-                     ? MAIN_COLOR
-                     : MENU_NOT_SELECTED_COLOR);   
+                gameMode == GameMode::LocalMultiplayer
+                     ? mainColor
+                     : menuNotSelectedColor);   
         }
             break;
-        case GAME: {
+        case Game: {
             #pragma region Movment
             switch (gameMode)
             {
-                case SINGLEPLAYER:
+                case Singleplayer:
                     playerRight.derivativeDerivativePositionY = std::max(
                     -1300.f,
                     std::min(
@@ -155,7 +155,7 @@ void simulateGame(
                         (ball.positionY - playerRight.positionY) * 100.f)
                     );
                     break;
-                case LOCAL_MULTIPLAYER:
+                case LocalMultiplayer:
                     playerRight.derivativeDerivativePositionY = 0.f;
                     if (isHold(KeyboardButton::DOWN))
                     {
@@ -248,7 +248,7 @@ void simulateGame(
                 playerLeft.score.positionY, 
                 playerLeft.score.halfWidth * 2, 
                 playerLeft.score.halfHeight * 2, 
-                MAIN_COLOR
+                mainColor
             );
             renderNumberCharacter(
                 renderState, 
@@ -257,7 +257,7 @@ void simulateGame(
                 playerRight.score.positionY, 
                 playerRight.score.halfWidth * 2, 
                 playerRight.score.halfHeight * 2, 
-                MAIN_COLOR
+                mainColor
             );
 
             renderRect(
@@ -266,21 +266,21 @@ void simulateGame(
                 ball.positionY, 
                 ball.halfWidth, 
                 ball.halfHeight, 
-                MAIN_COLOR);
+                mainColor);
             renderRect(
                 renderState, 
                 playerLeft.positionX, 
                 playerLeft.positionY, 
                 playerLeft.halfWidth, 
                 playerLeft.halfHeight, 
-                MAIN_COLOR);
+                mainColor);
             renderRect(
                 renderState, 
                 playerRight.positionX, 
                 playerRight.positionY, 
                 playerRight.halfWidth, 
                 playerLeft.halfHeight, 
-                MAIN_COLOR);
+                mainColor);
             #pragma endregion
         }
             break;
