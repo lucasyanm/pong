@@ -125,13 +125,13 @@ LRESULT CALLBACK WindowCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             bool pressed = HIWORD(lParam) & KF_UP ? false : true;
 
             switch (vkCode) {
-                processButton(KeyboardButton::UP, VK_UP, pressed);
-                processButton(KeyboardButton::DOWN, VK_DOWN, pressed);
+                processButton(KeyboardButton::Up, VK_UP, pressed);
+                processButton(KeyboardButton::Down, VK_DOWN, pressed);
                 processButton(KeyboardButton::W, 'W', pressed);
                 processButton(KeyboardButton::S, 'S', pressed);
-                processButton(KeyboardButton::LEFT, VK_LEFT, pressed);
-                processButton(KeyboardButton::RIGHT, VK_RIGHT, pressed);
-                processButton(KeyboardButton::ENTER, VK_RETURN, pressed);
+                processButton(KeyboardButton::Left, VK_LEFT, pressed);
+                processButton(KeyboardButton::Right, VK_RIGHT, pressed);
+                processButton(KeyboardButton::Enter, VK_RETURN, pressed);
             }
         }
             break;

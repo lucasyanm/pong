@@ -100,13 +100,13 @@ void simulateGame(
     switch (currentScreen)
     {
         case MainMenu: {
-            if(isPressed(KeyboardButton::RIGHT)) {
+            if(isPressed(KeyboardButton::Right)) {
                 gameMode = LocalMultiplayer;
             }
-            else if(isPressed(KeyboardButton::LEFT)) {
+            else if(isPressed(KeyboardButton::Left)) {
                 gameMode = Singleplayer;
             }
-            else if (isPressed(KeyboardButton::ENTER))
+            else if (isPressed(KeyboardButton::Enter))
             {  
                 currentScreen = Game;
             }
@@ -157,11 +157,11 @@ void simulateGame(
                     break;
                 case LocalMultiplayer:
                     playerRight.derivativeDerivativePositionY = 0.f;
-                    if (isHold(KeyboardButton::DOWN))
+                    if (isHold(KeyboardButton::Down))
                     {
                         playerRight.derivativeDerivativePositionY -= 2000;
                     };
-                    if (isHold(KeyboardButton::UP)) {
+                    if (isHold(KeyboardButton::Up)) {
                         playerRight.derivativeDerivativePositionY += 2000;
                     };
                     break;

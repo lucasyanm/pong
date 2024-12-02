@@ -7,20 +7,20 @@ struct KeyboardButton {
 
     enum
     {
-        UP,
-        DOWN,
+        Up,
+        Down,
         W,
         S,
-        LEFT,
-        RIGHT,
-        ENTER,
+        Left,
+        Right,
+        Enter,
 
-        BUTTONS_COUNT
+        ButtonsCount
     };
 };
 
 struct Input {
-    KeyboardButton buttons[KeyboardButton::BUTTONS_COUNT];
+    KeyboardButton buttons[KeyboardButton::ButtonsCount];
 };
 
 void resetInput(Input& input);
